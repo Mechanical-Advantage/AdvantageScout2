@@ -1,0 +1,22 @@
+{
+    "name": "advantage-scout",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "npm-run-all \"build:pre {@}\" \"build:run\" \"build:post\" --",
+        "build:pre": "node prebuild.js",
+        "build:run": "rollup -c",
+        "build:post": "del-cli ./src/game"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^17.0.0",
+        "@rollup/plugin-node-resolve": "^11.0.0",
+        "copy-dir": "^1.3.0",
+        "del-cli": "^5.0.0",
+        "npm-run-all": "^4.1.5",
+        "rollup": "^2.3.4",
+        "rollup-plugin-css-only": "^3.1.0",
+        "rollup-plugin-svelte": "^7.0.0",
+        "rollup-plugin-terser": "^7.0.0",
+        "svelte": "^3.0.0"
+    }
+}
