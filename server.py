@@ -4,6 +4,7 @@ import os
 import subprocess
 import threading
 import time
+from pathlib import Path
 
 import cherrypy
 
@@ -49,7 +50,32 @@ class Root(object):
 
 def app_build_thread():
     global app_data
+    last_modified_cache = {}
     while True:
+        # Wait for file changes
+        has_changed = False
+        while not has_changed:
+            current_files = [str(x) for x in Path(
+                get_absolute_path("games")).rglob("*.*")] + [str(x) for x in Path(
+                    get_absolute_path("app")).rglob("*.*")]
+            for x in Path(get_absolute_path("app", "build")).glob("*"):
+                x = str(x)
+                if x in current_files:
+                    current_files.remove(x)
+
+            for x in current_files:
+                if x not in last_modified_cache or last_modified_cache[x] != os.stat(x).st_mtime:
+                    has_changed = True
+                    last_modified_cache[x] = os.stat(x).st_mtime
+            for x in last_modified_cache.keys():
+                if x not in current_files:
+                    has_changed = True
+                    del last_modified_cache[x]
+
+            if not has_changed:
+                time.sleep(1)
+
+        # Build the app
         cherrypy.log("Building the app...")
         node = subprocess.Popen(["npm", "run", "build", "--", GAME],
                                 cwd=get_absolute_path("app"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -64,12 +90,10 @@ def app_build_thread():
             "css": open(get_absolute_path("app", "build", "bundle.css"), "r").read(),
             "js": open(get_absolute_path("app", "build", "bundle.js"), "r").read()
         }
-        app_data_hash = hashlib.sha1(json.dumps(
+        app_data_hash = hashlib.md5(json.dumps(
             app_data_tmp).encode("UTF-8")).hexdigest()
         app_data_tmp["hash"] = app_data_hash
         app_data = app_data_tmp
-
-        time.sleep(30)
 
 
 if __name__ == "__main__":
