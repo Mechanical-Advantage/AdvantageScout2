@@ -5,6 +5,7 @@ export default class ServerInterfaceWeb {
             const http = new XMLHttpRequest();
             http.open("GET", url);
             http.send();
+            http.timeout = 1000;
 
             http.addEventListener("readystatechange", () => {
                 if (http.readyState == 4 && http.status == 200) {

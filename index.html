@@ -26,24 +26,33 @@
                 window.app = new App();
             }
 
+            window.suppressReload = false;
+            function reload(firstRequest) {
+                var cache = window.localStorage.getItem("appData");
+                if (cache != null) {
+                    cache = JSON.parse(cache);
+                    if (firstRequest) {
+                        start(cache);
+                    }
+                }
+
+                serverInterface.request("download_app", { hash: cache == null ? "" : cache.hash }).then((response) => {
+                    if (response != null && response.changed) {
+                        window.localStorage.setItem("appData", JSON.stringify(response.data));
+                        if (!firstRequest && (window.supressReload || !confirm("The app has changed. Reload?"))) {
+                            window.suppressReload = true;
+                            return;
+                        }
+                        start(response.data);
+                    }
+                });
+            }
+
             window.addEventListener("load", () => {
                 import(isWeb ? "/ServerInterfaceWeb.js" : "/ServerInterfaceApp.js").then((ServerInterface) => {
                     window.serverInterface = new ServerInterface.default();
-
-                    var cache = window.localStorage.getItem("appData");
-                    if (cache != null) {
-                        cache = JSON.parse(cache);
-                        start(cache);
-                    }
-
-                    serverInterface
-                        .request("download_app", { hash: cache == null ? "" : cache.hash })
-                        .then((response) => {
-                            if (response.changed) {
-                                start(response.data);
-                                window.localStorage.setItem("appData", JSON.stringify(response.data));
-                            }
-                        });
+                    reload(true);
+                    window.setInterval(() => reload(false), 2000);
                 });
             });
         </script>
