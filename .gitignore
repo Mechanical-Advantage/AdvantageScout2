@@ -376,5 +376,8 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,linux,macos,python,windows
 
-/capacitor/AdvantageScout.apk
-/capacitor/android/app/src/main/assets
+/cordova/plugins/
+/cordova/platforms/
+/cordova/www/*.html
+/cordova/www/*.css
+/cordova/www/*.js

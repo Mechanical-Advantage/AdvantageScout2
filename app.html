@@ -10,6 +10,10 @@
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,
                     "Helvetica Neue", sans-serif;
+                -webkit-touch-callout: none;
+                -webkit-text-size-adjust: none;
+                -webkit-user-select: none;
+                user-select: none;
             }
         </style>
 
@@ -18,6 +22,7 @@
         <script type="module">
             window.isWeb = ISWEB; // Replaced by web server or during app build
 
+            // Instantiates the app and updates the HTML/CSS
             function start(data) {
                 window.gameConfig = data.config;
                 document.getElementById("appStyles").innerHTML = data.css;
@@ -26,6 +31,7 @@
                 window.app = new App();
             }
 
+            // Loads the app from the cache or server
             window.suppressReload = false;
             function reload(firstRequest) {
                 var cache = window.localStorage.getItem("appData");
@@ -48,11 +54,23 @@
                 });
             }
 
+            // Update HTML for web or app
             window.addEventListener("load", () => {
                 if (isWeb) {
-                    document.head.innerHTML += '<link rel="icon" type="image/x-icon" href="/favicon.ico" />';
+                    const link = document.createElement("link");
+                    link.rel = "icon";
+                    link.type = "image/x-icon";
+                    link.href = "/favicon.ico";
+                    document.head.appendChild(link);
+                } else {
+                    const script = document.createElement("script");
+                    script.src = "cordova.js";
+                    document.head.appendChild(script);
                 }
+            });
 
+            // Load app
+            window.addEventListener(isWeb ? "load" : "deviceready", () => {
                 import(isWeb ? "/ServerInterfaceWeb.js" : "/ServerInterfaceApp.js").then((ServerInterface) => {
                     window.serverInterface = new ServerInterface.default();
                     reload(true);

@@ -1,8 +1,11 @@
-This folder contains code that's loaded dynamically (i.e. NOT bundled with the app). The main entry point is a JS module "src/App.js", which can load one or more Svelte components. It also loads the main game module from the "games" folder; see the [README](/games/README.md) for more details.
+## Svelte
 
-The following commands will build the app, including copying the source for a single game (2022 in this case):
+This folder contains all of the code for the app and admin page. The main entry points are JS moduls ("src/app/App.js" and "src/admin/Admin.js"), which can load one or more Svelte components. The app data is loaded dynamically, and includes the game module from the "games" folder; see the [README](/games/README.md) for more details.
+
+The following commands will build the app and admin page. The app build also requires a game to be selected. The bundles are saved to the "build" folder.
 
 ```
 npm install
-npm run build -- 2022
+npm run build-app -- 2022
+npm run build-admin
 ```

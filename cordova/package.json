@@ -1,0 +1,40 @@
+{
+    "name": "org.littletonrobotics.advantagescout",
+    "displayName": "Advantage Scout",
+    "version": "2.0.0",
+    "description": "Custom scouting system from FRC 6328.",
+    "author": "FRC 6328",
+    "license": "MIT",
+    "main": "index.js",
+    "scripts": {
+        "build": "cordova build android",
+        "install": "cordova prepare"
+    },
+    "devDependencies": {
+        "cordova": "^11.0.0",
+        "cordova-android": "^10.1.2",
+        "cordova-plugin-app-version": "^0.1.14",
+        "cordova-plugin-bluetooth-serial": "github:Mechanical-Advantage/AdvantageScoutSerial",
+        "cordova-plugin-camera": "^6.0.0",
+        "cordova-plugin-dialogs": "^2.0.2",
+        "cordova-plugin-file": "^7.0.0"
+    },
+    "cordova": {
+        "platforms": [
+            "android"
+        ],
+        "plugins": {
+            "cordova-plugin-app-version": {},
+            "cordova-plugin-camera": {
+                "ANDROIDX_CORE_VERSION": "1.6.+"
+            },
+            "cordova-plugin-dialogs": {
+                "ANDROIDX_CORE_VERSION": "1.6.+"
+            },
+            "cordova-plugin-file": {
+                "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+            },
+            "cordova-plugin-bluetooth-serial": {}
+        }
+    }
+}

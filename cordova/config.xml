@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.littletonrobotics.advantagescout" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Advantage Scout</name>
+    <description>Custom scouting system from FRC 6328.</description>
+    <author email="info@littletonrobotics.org" href="http://www.littletonrobotics.org">FRC 6328</author>
+    <content src="app.html" />
+    <icon src="logo.png" width="256" height="256" density="mdpi" />
+    <hook type="before_compile" src="copySrc.js" />
+    <hook type="after_compile" src="copyApk.js" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+</widget>
