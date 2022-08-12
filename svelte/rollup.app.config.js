@@ -5,15 +5,15 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 
 export default {
-    input: "src/App.js",
+    input: "src/app/App.js",
     output: {
         format: "iife",
         name: "App",
-        file: "build/bundle.js"
+        file: "build/app.js"
     },
     plugins: [
         svelte(),
-        css({ output: "bundle.css" }),
+        css({ output: "app.css" }),
         terser(),
         resolve({
             browser: true,

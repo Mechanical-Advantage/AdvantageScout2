@@ -1,11 +1,11 @@
 {
     "name": "advantage-scout",
-    "version": "1.0.0",
     "scripts": {
-        "build": "npm-run-all \"build:pre {@}\" \"build:run\" \"build:post\" --",
-        "build:pre": "node prebuild.js",
-        "build:run": "rollup -c",
-        "build:post": "del-cli ./src/game"
+        "build-app": "npm-run-all \"build-app:pre {@}\" \"build-app:run\" \"build-app:post\" --",
+        "build-app:pre": "node copyGame.js",
+        "build-app:run": "rollup --config rollup.app.config.js",
+        "build-app:post": "del-cli ./src/app/game",
+        "build-admin": "rollup --config rollup.admin.config.js"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^17.0.0",

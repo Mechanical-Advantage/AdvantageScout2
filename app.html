@@ -22,7 +22,7 @@
                 window.gameConfig = data.config;
                 document.getElementById("appStyles").innerHTML = data.css;
                 document.body.innerHTML = "";
-                const App = new Function(data.js.replace("var App=", "return "))();
+                const App = new Function("return " + data.js.substring(8))();
                 window.app = new App();
             }
 
@@ -49,6 +49,10 @@
             }
 
             window.addEventListener("load", () => {
+                if (isWeb) {
+                    document.head.innerHTML += '<link rel="icon" type="image/x-icon" href="/favicon.ico" />';
+                }
+
                 import(isWeb ? "/ServerInterfaceWeb.js" : "/ServerInterfaceApp.js").then((ServerInterface) => {
                     window.serverInterface = new ServerInterface.default();
                     reload(true);
