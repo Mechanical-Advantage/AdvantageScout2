@@ -1,6 +1,6 @@
-# AdvantageScoutTest
+# Advantage Scout 2
 
-This is an example repository for building and loading the Svelte app and admin page.
+Advantage Scout 2 is a new major version of our electronic scouting system [Advantage Scout](https://github.com/Mechanical-Advantage/AdvantageScout). This project is still under active development.
 
 -   The web server is at the root level along with the HTML and server interfaces. These are packaged in the Android app and sent directly to the web client.
 
