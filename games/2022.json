@@ -1,3 +1,248 @@
 {
-    "fields": ["Field1", "Field2", "Field3", "Field4"]
+    "fields": [
+        "AllianceColor INTEGER DEFAULT 0",
+        "StartPosition TEXT DEFAULT ''",
+        "Taxi INTEGER DEFAULT 0",
+        "AutoUpperSuccess INTEGER DEFAULT 0",
+        "AutoLowerSuccess INTEGER DEFAULT 0",
+        "AutoUpperFailures INTEGER DEFAULT 0",
+        "AutoLowerFailures INTEGER DEFAULT 0",
+        "TeleUpperSuccess INTEGER DEFAULT 0",
+        "TeleLowerSuccess INTEGER DEFAULT 0",
+        "TeleUpperFailures INTEGER DEFAULT 0",
+        "TeleLowerFailures INTEGER DEFAULT 0",
+        "ScoringData TEXT DEFAULT ''",
+        "ClimbLow TEXT DEFAULT ''",
+        "ClimbMid TEXT DEFAULT ''",
+        "ClimbHigh TEXT DEFAULT ''",
+        "ClimbTraversal TEXT DEFAULT ''",
+        "StartPositionZone INTEGER DEFAULT 0",
+        "PlayingDefenseDuration INTEGER DEFAULT 0",
+        "UnderDefenseDuration INTEGER DEFAULT 0",
+        "Points INTEGER DEFAULT 0",
+        "Penalties INTEGER DEFAULT 0",
+        "Disabled INTEGER DEFAULT 0",
+        "DriverRating INTEGER DEFAULT 0",
+        "IntakeRating INTEGER DEFAULT 0",
+        "DefenseRating INTEGER DEFAULT 0",
+        "UnderDefenseRating INTEGER DEFAULT 0",
+        "Comment TEXT DEFAULT ''"
+    ],
+    "pitFields": [
+        "DriveTrain TEXT DEFAULT ''",
+        "Weight INTEGER DEFAULT 0",
+        "Height INTEGER DEFAULT 0",
+        "Width INTEGER DEFAULT 0",
+        "Length INTEGER DEFAULT 0",
+        "CanTaxi INTEGER DEFAULT 0",
+        "CanShootUpperAuto INTEGER DEFAULT 0",
+        "CanShootLowerAuto INTEGER DEFAULT 0",
+        "CanShootUpperTele INTEGER DEFAULT 0",
+        "CanShootLowerTele INTEGER DEFAULT 0",
+        "CanClimbLow INTEGER DEFAULT 0",
+        "CanClimbMid INTEGER DEFAULT 0",
+        "CanClimbHigh INTEGER DEFAULT 0",
+        "CanClimbTraversal INTEGER DEFAULT 0",
+        "ShootFromFender INTEGER DEFAULT 0",
+        "ShootFromTarmac INTEGER DEFAULT 0",
+        "ShootFromLaunchpad INTEGER DEFAULT 0",
+        "StartFromFender INTEGER DEFAULT 0",
+        "StartFromTarmacMid INTEGER DEFAULT 0",
+        "StartFromTarmacEdge INTEGER DEFAULT 0",
+        "MaxAutoShots INTEGER DEFAULT 0",
+        "HoldingCapacity INTEGER DEFAULT 0",
+        "MultipleDriveTeams TEXT DEFAULT 0",
+        "Comment TEXT DEFAULT ''",
+        "Image TEXT DEFAULT ''",
+        "UsesFalcon500s INTEGER DEFAULT 0",
+        "InspectedFalcon500s INTEGER DEFAULT 0"
+    ],
+    "modeAliases": {
+        "endgame": ["P", "Post", "Post Game"]
+    },
+    "uploadChecks": {
+        "pit": [
+            {
+                "field": "DriveTrain",
+                "operator": "!=",
+                "value": "",
+                "message": "Please enter a drive train.",
+                "binding": true
+            },
+            {
+                "field": "Weight",
+                "operator": ">",
+                "value": 50,
+                "message": "Are you sure this weight is correct?",
+                "binding": false
+            },
+            {
+                "field": "Weight",
+                "operator": "<=",
+                "value": 125,
+                "message": "Weight must be measured without bumpers or batteries",
+                "binding": true
+            },
+            {
+                "field": "Height",
+                "operator": ">=",
+                "value": 0,
+                "message": "Are you sure this height is correct?",
+                "binding": true
+            },
+            {
+                "field": "Height",
+                "operator": "<=",
+                "value": 52,
+                "message": "Height must be measured while not extended.",
+                "binding": true
+            },
+            {
+                "field": "Width",
+                "operator": ">=",
+                "value": 0,
+                "message": "Are you sure this width is correct?",
+                "binding": true
+            },
+            {
+                "field": "Width",
+                "operator": "<",
+                "value": 50,
+                "message": "Are you sure this width is correct?",
+                "binding": false
+            },
+            {
+                "field": "Length",
+                "operator": ">=",
+                "value": 0,
+                "message": "Are you sure this length is correct?",
+                "binding": true
+            },
+            {
+                "field": "Length",
+                "operator": "<",
+                "value": 50,
+                "message": "Are you sure this length is correct?",
+                "binding": false
+            },
+            {
+                "field": "MaxAutoShots",
+                "operator": ">=",
+                "value": 0,
+                "message": "Enter a positive value for max auto shots",
+                "binding": true
+            },
+            {
+                "field": "MaxAutoShots",
+                "operator": "<",
+                "value": 6,
+                "message": "Please confirm their max auto shots",
+                "binding": false
+            },
+            {
+                "field": "HoldingCapacity",
+                "operator": ">=",
+                "value": 0,
+                "message": "Enter a positive value for holding capacity",
+                "binding": true
+            },
+            {
+                "field": "HoldingCapacity",
+                "operator": "<=",
+                "value": 2,
+                "message": "The rules don't allow more than 2 cargo",
+                "binding": true
+            },
+            {
+                "script": "return (((data.Length * 2) + (data.Width * 2)) < 120)",
+                "message": "Their length and width exceed frame perimeter",
+                "binding": false
+            },
+            {
+                "script": "return ((data.UsesFalcon500s - data.InspectedFalcon500s >= 0))",
+                "message": "They do not have Falcon 500s but they inspected them. Why???",
+                "binding": false
+            }
+        ],
+        "match": [
+            {
+                "field": "Comment",
+                "operator": "!=",
+                "value": "",
+                "message": "You must enter a comment.",
+                "binding": true
+            },
+            {
+                "script": "return (data.Comment.length < 200) || (data.Comment.length >= 500)",
+                "message": "Your comment is pretty long. Please try to shorten it. Continue?",
+                "binding": false
+            },
+            {
+                "script": "return (data.Comment.length < 500)",
+                "message": "Your comment is very long. Please shorten it.",
+                "binding": true
+            },
+            {
+                "script": "return (data.Comment.length > 15) || (data.Comment.length == 0)",
+                "message": "Your comment is very short. Would you still like to continue?",
+                "binding": false
+            },
+            {
+                "field": "Points",
+                "type": "integer",
+                "operator": ">=",
+                "value": 0,
+                "message": "Are you sure the final score is correct?",
+                "binding": true
+            },
+            {
+                "field": "Points",
+                "operator": "<",
+                "value": 300,
+                "message": "Are you sure the final score is correct?",
+                "binding": false
+            },
+            {
+                "script": "return data.Points % 1 == 0",
+                "message": "Points should be a whole number!",
+                "binding": true
+            },
+            {
+                "field": "Penalties",
+                "operator": ">=",
+                "value": 0,
+                "message": "Are you sure the penalties are correct?",
+                "binding": true
+            },
+            {
+                "field": "Penalties",
+                "operator": "<",
+                "value": 10,
+                "message": "Are you sure the final penalties are correct?",
+                "binding": false
+            },
+            {
+                "script": "return data.Penalties % 1 == 0",
+                "message": "Penalties should be a whole number!",
+                "binding": true
+            },
+            {
+                "script": "return data.AutoUpperSuccess + data.AutoUpperFailures + data.AutoLowerSuccess + data.AutoLowerFailures < 7",
+                "message": "They phyically cannot score that much in Auto",
+                "binding": false
+            },
+            {
+                "field": "StartPosition",
+                "operator": "!=",
+                "value": "",
+                "message": "Please enter a starting position",
+                "binding": true
+            }
+        ]
+    },
+    "helpText": {
+        "auto": "<h2>Starting Position</h2>Click precisely where the robot is on the field to choose the starting position.<h2>Taxi</h2>Once you have selected a starting position, if the robot moves completely off of the tarmac, click the taxi near the top of the screen. Tap the taxi again to switch back.<h2>Shooting Position</h2>Click anywhere on the field to indicate the robot's shooting location. After you select a shooting location, a red and green box will pop up on the side of the screen.<h2>Scoring Box</h2>The bottom row indicates shots aimed at the lower hub, while the top row indicates shots aimed at the upper hub. The red column indicates clear attempts, but failed shots, while the green column indicates shots successfully scored in the hub.<h1>Tele-op Only</h1><h2>Climb</h2>During the tele-op period, four large squares will appear on the side of the screen. This indicates the four climb levels. The topmost square is for the low rung, followed by the mid rung, high rung, and traversal rung respectively. When you click on any of the squares, the label on the square will switch to A, indicating that the robot attempted to climb. When clicked again, the label will change to S, indicating that the robot has successfully climbed to that level. If the robot attempts to climb but fails, click the square again to change the label to F, for failure.<div style=\"margin-top: 12px; margin-bottom: 12px; margin-left: 16px;\"><span style=\"color: green;\">green</span> = success<br><span style=\"color: red;\">red</span> = failure/missed</div>The rows indicate different hub levels:<div style=\"margin-top: 12px; margin-bottom: 12px; margin-left: 16px;\"><u>Top row</u> = upper hub<br><u><br><u>Lower row</u> = Lower hub.</b><br><br>The scoring buttons also track timing of shots. Try to tap as quickly as possible after shots were made.",
+        "endgame": "<style>table {border-collapse: collapse; margin-left: 5px; margin-right: 5px;} td {border: 1px solid black; padding: 5px;} li.small {font-size: 16px;} .emoji {font-size: 24px;}</style><h2>Disabled / Fell</h2>Mark if the robot is <b>nonfunctional</b> for more than half the match. This includes disconnects, being disabled by the FMS, or falling over.<ul><li>Robot is disconnected when match starts, begins moving 10 seconds later - <i>do not mark as disabled</i></li><li>Robot is disabled by the FMS shortly after auto and doesn't move for the remainder of the match - <i>mark as disabled</i></li><li>Robot falls during the match and is quickly righted by an alliance partner - <i>do not mark as fallen</i></li></ul></div><h2>Driver Rating</h2><table><tr><td>NA</td><td>The robot did not move during teleop.</td></tr><tr><td>&#x2B50</td><td>Terrible - majority of time spent maneuvering.</td></tr><tr><td>&#x2B50&#x2B50</td><td>Often has difficulty moving around / lining up for objectives.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50</td><td>Pretty good - occasionally has trouble maneuvering.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Rarely has difficulty moving around / lining up for objectives.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Incredibly efficient - moves around easily with no difficulty.</td></tr></table><h2>Intake Rating</h2><table><tr><td>NA</td><td>The robot did not intake cargo from the floor.</td></tr><tr><td>&#x2B50</td><td>Tried to intake cargo but usually failed.</td></tr><tr><td>&#x2B50&#x2B50</td><td>Had difficulty with intake or intakes slowly.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50</td><td>Pretty fast and reliable - sometimes fails to intake.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Quite fast and reliable - regularly intakes with no difficulty.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Cargo magnet - no effort required.</td></tr></table><h2>Playing Defense Rating</h2><table><tr><td>NA</td><td>Did not go near any other robots.</td></tr><tr><td>&#x2B50</td><td>Came near another robot, and maybe got in their way once.</td></tr><tr><td>&#x2B50&#x2B50</td><td>Actively tried to play defense, however it was incredibly inefficient.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50</td><td>Played halfway decent defense.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Slowed down the scoring robot a significant amount.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Absolutely shut down the offensive robot.</td></tr></table><h2>Under Defense Rating</h2><table><tr><td>NA</td><td>Other robots did not go near them.</td></tr><tr><td>&#x2B50</td><td>Absolutely shut down by the defensive robot.</td></tr><tr><td>&#x2B50&#x2B50</td><td>Slowed down by the defense robot a significant amount.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50</td><td>Somewhat affected by defense.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Minimally affected by defense.</td></tr><tr><td>&#x2B50&#x2B50&#x2B50&#x2B50&#x2B50</td><td>Defense? What's defense?</td></tr></table><h2>Comments</h2><b>There is always something to comment on.</b><br>Goes directly to the coach's sheet - what would you tell the drive team?<ul><li>Observations about mechanisms - looks unstable, super well built, etc.<ul><li class=\"small\">\"Their climber is a little wobbly and tends to slide around on the generator switch.\"</li><li class=\"small\">\"Cargo regularly gets stuck in the feeding mechanism.\"</li></ul></li><li>Unique strategies / good strategies / bad strategies<ul><li class=\"small\">\"Chose to continue shooting in upper hub rather than climbing.\"</li><li class=\"small\">\"Chose to shoot from a difficult part of the field.\"</li></ul></li><li>Interesting mechanisms<ul><li class=\"small\">\"They have a system for passing cargo to an alliance partner during auto.\"</li></ul></li><li>Potential weaknesses<ul><li class=\"small\">\"Their vision system is easily interrupted by a defensive robot.\"</li><li class=\"small\">\"They can be pushed from the side easily but not head on.\"</li></ul></li><li>Out-of-character behavior<ul><li class=\"small\">\"Their driving is much worse than usual - maybe a new drive team.\"</li><li class=\"small\">\"They didn't shoot at all - shooter potentially broken.\"</li></ul></li><li>Fouls / lack of competence<ul><li class=\"small\">\"They got a series of fouls while doing defense, then their bumpers fell off and the battery was dragging behind them\" (If this happens, <i>please</i> tell us <span class=\"emoji\">&#x1F609</span>)</li></ul></li><li>Anything else you observe!</li></ul><div style=\"font-weight: bold; font-size: 22px;\">Bad comments:</div><ul><li>\"They were bad.\"<ul><li class=\"small\">Elaborate - what made them bad? Bad driving? Unreliable mechanisms? Bad strategizing?</li></ul></li><li>\"I couldn't see the field well.\"<ul><li class=\"small\">GET UP AND MOVE</li></ul></li><li>\"Slow.\"<ul><li class=\"small\">Elaborate - in what way were they slow? Slow driving? Slow intake? Defense?</li></ul></li><li>\"Good driving.\"<ul><li class=\"small\">Give them a good driver rating! If you choose to comment on this, elaborate with more specifics</li></ul></li><li>\"Tie.\"<ul><li class=\"small\">We already know this from the score</li></ul></li><li>\"Piece fell off robot.\"<ul><li class=\"small\">What piece fell off the robot? If you don't know specifically, describe it</li></ul></li><li>\"I entered this comment so it was long enough.\"</li><li>\"fjkdshfjkhdskjfhdsjkhj\"<ul><li class=\"small\">This is not an acceptable comment!<span class=\"emoji\">&#x1F621</span></li></ul></li></ul><h2>Final Score</h2>Wait for the <b>post-animation score</b>, after the match winner is officially announced, rather than the automated score immediately after the match completes.",
+        "pit": "Try to find a team member not actively engaged in pit work, but feel free to interrupt if necessary (just be polite about it). Remember that you are representing our team, so be gracious and professional.<h2>Drive Train Type</h2>Include # of wheels if applicable. Common drive train types (though many more exist):<ul><li><u>Standard Tank</u> - 4-8 wheels, internal to superstructure</li><li><u>West Coast Drive</u> - similar to above, but wheels on outside of superstructure</li><li><u>Literal Tank</u> - standard tank but with tracks</li><li><u>Mecanum</u> - four mecanum roller wheels allowing omnidirectional movement</li><li><u>Swerve</u> - omnidirectional drive, but wildly complicated</li><li><u>H-Drive</u> - five omniwheels in an \"H\" shape</li></ul><h2>Top Speed</h2>Specify in feet per second. Leave blank if unknown.<h2>Weight</h2>Specify in pounds <b>without bumpers or batteries</b>.<h2>Height</h2>Robot height in inches when not extended.<h2>Can Move?</h2>Can they move from the initation line during auto? <i>Not just whether the robot is capable of driving in general.</i><h2>Can Delay Shooting?</h2>If they shoot during auto, can they delay in order to avoid interferring with shots from alliance partners? What are their options for doing so?<h2>Max Climb Reach</h2>What is the maximum height they can extend to while climbing? Leave blank if they can't climb.<h2>Can Lift Others?</h2>Are they capable of lifting another robot while climbing? - Do they have a buddy climb?<h2>Multiple Drive Teams?</h2>Do they use a single drive team throughout the entire event, or does it change between matches?<h2>Shooting Locations</h2>Indicate which of the following positions the robot can shoot from:<div style=\"margin-top: 12px; margin-bottom: 12px; margin-left: 16px;\"><u>Wall</u> - against the wall under the power port<br><u>Opponent side</u> - anywhere on the side of the field closer to the power port (opposite the alliance driver stations)<br><u>Own side</u> - anywhere on the side of the field farther from the power port (close to the alliance driver stations)</div>If the robot can shoot from the border of opponent and own sides, choose opponent.<h2>Comment</h2>What else was mentioned that is relevant to the drive team?<ul><li>Unique / interesting mechanisms</li><li>Focus on particular game objectives</li><li>Potential robot problems, broken mechanisms, etc.</li><li>Any other information you can provide!</li></ul><h2>Robot Image</h2><ul><li>Try to get a diagonal angle (so that the front and side are visible)</li><li>Avoid people / objects blocking parts of the robot (if possible)</li><li>Make sure the entire robot is in frame</li></ul>"
+    }
 }

@@ -17,16 +17,6 @@ class SvelteInterface:
     _app_data = None
     _admin_data = None
 
-    def __init__(self, get_game):
-        """
-        Creates a new SvelteInterface.
-
-        Parameters:
-            get_game: A function that returns the name of the current game.
-        """
-
-        self._get_game = get_game
-
     def get_app(self):
         """Returns a dictionary with the app bundle data."""
         return self._app_data
@@ -81,7 +71,7 @@ class SvelteInterface:
             # Wait for file changes
             has_changed = False
             while not has_changed:
-                game = self._get_game()
+                game = get_game()
                 if last_game != game:
                     last_game = game
                     has_changed = True
@@ -135,7 +125,7 @@ class SvelteInterface:
                 return
 
         # Build initial version
-        self._build(True, self._get_game())
+        self._build(True, get_game())
         self._build(False)
 
         # Start threads
