@@ -1,18 +1,18 @@
+<svelte:options accessors={true} />
+
 <script>
-		import { createEventDispatcher } from 'svelte';
-	
+    import { createEventDispatcher } from "svelte";
+
     let shown = false;
-	
-		let dispatch = createEventDispatcher();
-	
-	  export function show() {
+
+    let dispatch = createEventDispatcher();
+
+    export function show() {
         shown = !shown;
-				dispatch('show', shown);
-		}
+        dispatch("show", shown);
+    }
 </script>
 
-<svelte:options accessors={true}/>
-
 {#if shown}
-    <slot/>
+    <slot />
 {/if}
