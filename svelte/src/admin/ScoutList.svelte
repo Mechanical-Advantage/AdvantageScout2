@@ -1,17 +1,13 @@
 <script>
 	import { onMount } from "svelte";
 	let cols = 3;
-  let items = [
-    { id: 1, name: "Keith White", done: false },
-    { id: 2, name: "Connor Horn", done: true },
-    { id: 3, name: "Ayush Kulkarni", done: false },
-		{ id: 4, name: "Aryan Kulkarni", done: false }
-  ];
+  let items = [];
+
 	
 	
   let name = "";
 		onMount(async () => {
-      const response = await fetch("http://192.168.1.154:8000/get_scouts", {method: "GET"})
+      const response = await fetch("/admin/get_scouts", {method: "GET"})
 		  const data = await response.json();
 		  items = data;
     });  
@@ -34,16 +30,16 @@
   const toggle = item => {
     item.enabled = !item.enabled;
     items = items;
-		doPost(item.name,"toggle_scout")
+		doPost(item.name,"/admin/toggle_scout")
 		
   };
   async function doPost (scoutname,actionUrl){
     console.log(actionUrl)
-    if (actionUrl == "toggle_scout") {
+    if (actionUrl == "/admin/toggle_scout") {
       const formData = new FormData()
       formData.append("scout",scoutname)
       console.log(scoutname)
-      const res = await fetch('http://192.168.1.154:8000/toggle_scout', {
+      const res = await fetch('/admin/toggle_scout', {
       method: 'POST',
       body: formData
       })
@@ -51,7 +47,7 @@
     actionUrl ="none";
   };
   async function getScouts(){
-    const response = await fetch("http://192.168.1.154:8000/get_scouts", {method: "GET"})
+    const response = await fetch("/admin/get_scouts", {method: "GET"})
 		const data = await response.json();
 		items = data;
   }
@@ -76,35 +72,16 @@
     margin: 0;
   }
   input[type="text"]:focus {
-    border-color: #dc4f21;
-    box-shadow: 0 0 2px #dc4f21;
-  }
-  input[type="checkbox"] {
-    margin: 0 10px 0 0;
+    border-color: #b53fe8;
+    box-shadow: 0 0 2px #b53fe8;
   }
 
-  li button:hover {
-    transform: scale(2);
-  }
-  li button:focus {
-    outline: #dc4f21;
-  }
-  li:last-child {
-    border-bottom: none;
-  }
   label {
     display: block;
     text-transform: uppercase;
     font-size: 0.8em;
     color: #777;
 		opacity: 1.0;
-  }
-  li {
-    list-style: none;
-    padding: 6px 10px;
-    border-bottom: 1px solid #ddd;
-		opacity: 1.0;
-		color:red;
   }
 	button{
 		border:0;
@@ -113,13 +90,15 @@
 		padding: 8px 12px;
 		font-weight: bold;
 		box-shadow: 1px 2px 3px;
-		background: #d91b42;
+		background: #ea4566;
 	}
 		.enabled {
 			background: #11dd42;
 		}
 	.remove{
-		background: #aaaaaa;
+		background: #120fbf;
+        color: #bfad0f;
+        font-size: 12px;
 	}
 </style>
 

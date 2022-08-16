@@ -367,6 +367,28 @@ class Admin(object):
         conn_global.commit()
         conn_global.close()
         return
+    
+    @cherrypy.expose
+    def get_scouts(self):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute("SELECT * FROM scouts ORDER BY name")
+        raw=cur_global.fetchall()
+        scouts = []
+        for i in range(len(raw)):
+            scouts.append({"name": raw[i][0], "enabled": raw[i][1] ==1})
+        conn_global.commit()
+        conn_global.close()
+        return (json.dumps(scouts))
+    
+    @cherrypy.expose
+    def remove_scout(self, scout):
+        conn_global = sql.connect(db_global)
+        cur_global = conn_global.cursor()
+        cur_global.execute("DELETE FROM scouts WHERE name=?)", (scout,))
+        conn_global.commit()
+        conn_global.close()
+        return
 
     @cherrypy.expose
     def toggle_scout(self, scout):
