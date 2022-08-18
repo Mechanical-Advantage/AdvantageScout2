@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
 
     let matches = [
-        { teams: [6328, 6328, 6328, 4176, 6367, 5563], uploaded: [true, true, true, true, true, true] },
+        { teams: [6328, 2713, 6328, 4176, 6367, 5563], uploaded: [true, true, true, true, true, true] },
         { teams: [3323, 8626, 501, 1761, 1922, 2423], uploaded: [true, true, true, true, true, true] },
         { teams: [8604, 6201, 69, 1099, 5000, 6723], uploaded: [true, true, true, true, true, true] },
         { teams: [4909, 5846, 2877, 2084, 1757, 1965], uploaded: [true, true, true, true, true, true] },
@@ -14,9 +14,16 @@
         { teams: [7822, 5752, 1474, 6933, 95, 4909], uploaded: [true, true, true, true, true, true] }
     ];
 
-    function deleteRow(rowToBeDeleted) {
-        data = data.filter((row) => row != rowToBeDeleted);
-    }
+    // let name = "";
+    // onMount(async () => {
+    //     const response = await fetch("/admin/get_scouts", { method: "GET" });
+    //     const data = await response.json();
+    //     matches = data;
+    // });
+
+    // function deleteRow(rowToBeDeleted) {
+    //     data = data.filter((row) => row != rowToBeDeleted);
+    // }
 </script>
 
 <main>
@@ -36,7 +43,7 @@
         <tbody>
             {#each matches as match, i}
                 <tr />
-                <td>match {i}</td>
+                <td class={match.teams.includes(6328) ? "matchUs" : "match"}>match {i + 1}</td>
                 {#each match.teams as team, i}
                     <td
                         class={team == 6328
@@ -53,9 +60,6 @@
             {/each}
         </tbody>
     </table>
-
-    <!-- <h1>{testdata[0].teams}</h1> -->
-    <!-- class:uploaded={match.uploaded[i]} -->
 </main>
 
 <style>
@@ -111,5 +115,17 @@
         background-color: rgb(200, 200, 200);
         font-weight: bold;
         color: rgb(0, 150, 225);
+    }
+
+    .matchUs {
+        background-color: rgb(225, 225, 0);
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+    }
+
+    .match {
+        background-color: rgb(200, 200, 200);
+        font-weight: bold;
+        color: rgb(0, 0, 0);
     }
 </style>
