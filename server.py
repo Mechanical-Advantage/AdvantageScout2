@@ -385,7 +385,8 @@ class Admin(object):
     def remove_scout(self, scout):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
-        cur_global.execute("DELETE FROM scouts WHERE name=?)", (scout,))
+        print(scout)
+        cur_global.execute("DELETE FROM scouts WHERE name=?", (scout,))
         conn_global.commit()
         conn_global.close()
         return

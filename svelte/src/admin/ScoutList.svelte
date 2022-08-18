@@ -1,55 +1,55 @@
 <script>
 	import { onMount } from "svelte";
 	let cols = 3;
-  let items = [];
+  let scoutList = [];
 
 	
 	
   let name = "";
-		onMount(async () => {
-      const response = await fetch("/admin/get_scouts", {method: "GET"})
-		  const data = await response.json();
-		  items = data;
+	onMount(async () => {
+        const response = await fetch("/admin/get_scouts", {method: "GET"})
+	    const data = await response.json();
+	    scoutList = data;
     });  
 
-  const addItem = () => {
-    items = [
-      ...items,
+  const addScout = () => {
+    scoutList = [
+      ...scoutList,
       {
         name,
         enabled: false
       }
     ];
+    doPost(name, "/admin/add_scout")
     name = "";
   };
 
-  const remove = item => {
-    items = items.filter(i => i !== item);
+  const remove = scout => {
+    console.log(scout);
+    doPost(scout.name, "/admin/remove_scout")
+    scoutList = scoutList.filter(i => i !== scout);
+    
   };
 
-  const toggle = item => {
-    item.enabled = !item.enabled;
-    items = items;
-		doPost(item.name,"/admin/toggle_scout")
-		
+  const toggle = scout => {
+    scout.enabled = !scout.enabled;
+    scoutList = scoutList;
+	doPost(scout.name,"/admin/toggle_scout")
   };
-  async function doPost (scoutname,actionUrl){
+  
+  async function doPost (scoutName,actionUrl){
     console.log(actionUrl)
-    if (actionUrl == "/admin/toggle_scout") {
       const formData = new FormData()
-      formData.append("scout",scoutname)
-      console.log(scoutname)
-      const res = await fetch('/admin/toggle_scout', {
+      formData.append("scout",scoutName)
+      const res = await fetch(actionUrl, {
       method: 'POST',
       body: formData
       })
-    }
-    actionUrl ="none";
   };
   async function getScouts(){
     const response = await fetch("/admin/get_scouts", {method: "GET"})
 		const data = await response.json();
-		items = data;
+		scoutList = data;
   }
 </script>
 
@@ -97,7 +97,7 @@
 		}
 	.remove{
 		background: #120fbf;
-        color: #bfad0f;
+         color: #bfad0f;
         font-size: 12px;
 	}
 </style>
@@ -105,20 +105,20 @@
 <div>
   <h1>Available Scouts</h1>
 
-  <form on:submit|preventDefault={addItem}>
+  <form on:submit|preventDefault={addScout}>
     <label for="name">Add a scout</label>
     <input id="name" type="text" bind:value={name} />
   </form>
 
   <ul>
 		<tbody>
-{#each items as item, i}
+{#each scoutList as scout, i}
     {#if i % cols == 0}
      <tr >
       {#each Array(cols) as _,j}
-        {#if items[i/cols*cols + j]}
-       <td><button class:enabled={items[i/cols*cols + j].enabled} on:click={() => toggle(items[i/cols*cols + j])}>{items[i/cols*cols + j].name}</button></td>
-<td><button class:remove  on:click={() => remove(items[i/cols*cols + j])}>&times;</button></td>  
+        {#if scoutList[i/cols*cols + j]}
+       <td><button class:enabled={scoutList[i/cols*cols + j].enabled} on:click={() => toggle(scoutList[i/cols*cols + j])}>{scoutList[i/cols*cols + j].name}</button></td>
+<td><button class:remove  on:click={() => remove(scoutList[i/cols*cols + j])}>&times;</button></td>  
          {/if}
        {/each}
       </tr>
