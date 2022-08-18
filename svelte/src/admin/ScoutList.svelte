@@ -87,7 +87,7 @@
 		border:0;
 		cursor: pointer;
 		border-radius: 6px;
-		padding: 8px 12px;
+		padding: 14% 24%;
 		font-weight: bold;
 		box-shadow: 1px 2px 3px;
 		background: #ea4566;
@@ -99,6 +99,7 @@
 		background: #120fbf;
          color: #bfad0f;
         font-size: 12px;
+        padding: 10px;
 	}
 </style>
 
