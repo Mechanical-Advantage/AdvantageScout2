@@ -1,106 +1,174 @@
 <script>
-	import Hidden from './Hidden.svelte';
-	import { onMount } from "svelte";
+    import Hidden from "./Hidden.svelte";
+    import { onMount } from "svelte";
 
-	let child;
+    let child;
 
-	let fieldOrientationAnswer = '';
-	let fieldOrintationSelected;
-	let fieldOrientationChoices = [
-		{id: 1, text: 'Red right, Blue left'},
-		{id: 2, text: 'Red left, Blue right'}
-	];
+    let fieldOrientationAnswer = "";
+    let fieldOrintationSelected;
+    let fieldOrientationChoices = [
+        { id: 1, text: "Red right, Blue left" },
+        { id: 2, text: "Red left, Blue right" }
+    ];
 
-	let devModeAnswer = '';
-	let devModeSelected;
-	let devModeChoices = [
-		{id: 1, text: 'disabled'},
-		{id: 2, text: 'enabled'}
-	]
+    let devModeAnswer = "";
+    let devModeSelected;
+    let devModeChoices = [
+        { id: 1, text: "disabled" },
+        { id: 2, text: "enabled" }
+    ];
 
-	let schedulingMethodAnswer = '';
-	let schedulingMethodSelected;
-	let SchedulingMethodChoices = [
-		{id: 1, text: 'manual'},
-		{id: 2, text: 'auto'}
-	]
+    let schedulingMethodAnswer = "";
+    let schedulingMethodSelected;
+    let SchedulingMethodChoices = [
+        { id: 1, text: "manual" },
+        { id: 2, text: "auto" }
+    ];
 
-	function handleSubmit() {
-		alert(`answered question ${selected.id} (${selected.text}) with "${answer}"`);
-	}
+    function handleSubmit() {
+        alert(`answered question ${selected.id} (${selected.text}) with "${answer}"`);
+    }
 
-	//const obj = {"name": "John", "Age": 30};
-	//let keys = Object.keys(obj);
-	//let values = Object.values(obj);
-	//let entries = Object.entries(obj);
+    //const obj = {"name": "John", "Age": 30};
+    //let keys = Object.keys(obj);
+    //let values = Object.values(obj);
+    //let entries = Object.entries(obj);
 
-	onMount(async () => {
-fetch("http://127.0.0.1:8000/get_devices", {
-	  method: "GET"
-  })
-  .then(response => response.json())
-  .then(data => {
-		console.log(data);
-  }).catch(error => {
-    console.log(error);
-    return [];
-  });
-});
-
-
+    onMount(async () => {
+        fetch("http://127.0.0.1:8000/get_devices", {
+            method: "GET"
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+                return [];
+            });
+    });
 </script>
 
 <h1><strong>AdvantageScout Admin Page</strong></h1>
-<button on:click={child.show}>Dev Tools</button>
+<button on:click={child.show}>Config</button>
 
-<Hidden bind:this={child} on:show={e => child.shown = e.detail}>
-	<h2><strong>Config</strong></h2>
-	<h3>Game:</h3>
-	<input>
-	<h3>Event:</h3>
-	<input>
-	<h3>Field orientation:</h3>
-	<select value={fieldOrintationSelected} on:change="{() => fieldOrientationAnswer = ''}">
-		{#each fieldOrientationChoices as question}
-			<option value={question}>
-				{question.text}	
-			</option>
-		{/each}
-	</select>
-	<h3>Dev Mode:</h3>
-	<select value={devModeSelected} on:change="{() => devModeAnswer = ''}">
-		{#each devModeChoices as question}
-			<option value={question}>
-				{question.text}	
-			</option>
-		{/each}
-	</select>
-	<h3>Scheduling Method:</h3>
-	<select value={schedulingMethodSelected} on:change="{() => schedulingMethodAnswer = ''}">
-		{#each SchedulingMethodChoices as question}
-			<option value={question}>
-				{question.text}	
-			</option>
-		{/each}
-	</select>
-</Hidden>
+<div class="config">
+    <Hidden bind:this={child} on:show={(e) => (child.shown = e.detail)}>
+        <div>
+            <div>
+                <h3>Game:</h3>
+                <input class="game" />
+            </div>
+            <div>
+                <h3>Event:</h3>
+                <input class="event" />
+            </div>
+            <div class="field-orientation">
+                <h3>Field orientation:</h3>
+                <select
+                    class="field-orientation"
+                    value={fieldOrintationSelected}
+                    on:change={() => (fieldOrientationAnswer = "")}
+                >
+                    {#each fieldOrientationChoices as question}
+                        <option value={question}>
+                            {question.text}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+            <div class="dev-mode">
+                <h3>Dev Mode:</h3>
+                <select class="dev-mode" value={devModeSelected} on:change={() => (devModeAnswer = "")}>
+                    {#each devModeChoices as question}
+                        <option value={question}>
+                            {question.text}
+                        </option>
+                    {/each}
+                </select>
+            </div>
 
+            <div class="scheduling-method">
+                <h3>Scheduling Method:</h3>
+                <select
+                    class="scheduling-method"
+                    value={schedulingMethodSelected}
+                    on:change={() => (schedulingMethodAnswer = "")}
+                >
+                    {#each SchedulingMethodChoices as question}
+                        <option value={question}>
+                            {question.text}
+                        </option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+        <div class="block-schedling">
+            <div>
+                <h3>Training Length</h3>
+                <input id="blockTrainingLength" type="number" placeholder="Enter # of matches..." />
+            </div>
+            <div>
+                <h3>Group Size</h3>
+                <input id="blockTrainingLength" type="number" placeholder="Enter # of matches..." />
+            </div>
+            <div>
+                <h3>Break Length</h3>
+                <input id="blockTrainingLength" type="number" placeholder="Enter # of matches..." />
+            </div>
+            <div>
+                <h3>Start</h3>
+                <input id="blockTrainingLength" type="number" placeholder="Enter # of matches..." />
+            </div>
+            <div>
+                <h3>End</h3>
+                <input id="blockTrainingLength" type="number" placeholder="Enter # of matches..." />
+            </div>
+        </div>
+    </Hidden>
+</div>
 
 <style>
-	h3 {
-		width: 200px;
-		max-width: 100%;
-		font-size: 15px;
-		line-height: 2px;
-	}
+    h3 {
+        width: 200px;
+        max-width: 100%;
+        font-size: 15px;
+        line-height: 2px;
+    }
 
-	h2 {
-		font-size: 20px;
-		line-height: 1.5px;
-	}
+    h2 {
+        font-size: 20px;
+        line-height: 1.5px;
+    }
 
-	h1 {
-		font-size: 30px;
-		line-height: 1.5px;
-	}
+    h1 {
+        font-size: 30px;
+        line-height: 1.5px;
+    }
+
+    .config {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: left;
+    }
+    .config > div {
+        display: flex;
+    }
+    .config > div > h3 {
+        margin-bottom: 10px;
+    }
+    .config > div > input {
+        margin-bottom: 10px;
+    }
+    .config > div > select {
+        margin-bottom: 10px;
+    }
+
+    .block-scheduling {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: left;
+    }
 </style>
