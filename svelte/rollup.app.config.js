@@ -13,7 +13,7 @@ export default {
     },
     plugins: [
         svelte(),
-        css({ output: "app.css" }),
+        css({ output: "app_rollup.css" }),
         terser(),
         resolve({
             browser: true,

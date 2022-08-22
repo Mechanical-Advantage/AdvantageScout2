@@ -13,7 +13,7 @@ export default {
     },
     plugins: [
         svelte(),
-        css({ output: "admin.css" }),
+        css({ output: "admin_rollup.css" }),
         terser(),
         resolve({
             browser: true,

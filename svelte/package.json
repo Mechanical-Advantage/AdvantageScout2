@@ -1,11 +1,16 @@
 {
     "name": "advantage-scout",
     "scripts": {
-        "build-app": "npm-run-all \"build-app:pre {@}\" \"build-app:run\" \"build-app:post\" --",
+        "build-app": "npm-run-all \"build-app:pre {@}\" \"build-app:run-tailwind\" \"build-app:run-rollup\" \"build-app:run-merge\" \"build-app:post\" --",
         "build-app:pre": "node copyGame.js",
-        "build-app:run": "rollup --config rollup.app.config.js",
+        "build-app:run-tailwind": "tailwindcss -m -c tailwind.app.config.js -o ./build/app_tailwind.css",
+        "build-app:run-rollup": "rollup --config rollup.app.config.js",
+        "build-app:run-merge": "node mergeCss.js app",
         "build-app:post": "del-cli ./src/app/game",
-        "build-admin": "rollup --config rollup.admin.config.js"
+        "build-admin": "npm-run-all \"build-admin:run-tailwind\" \"build-admin:run-rollup\" \"build-admin:run-merge\"",
+        "build-admin:run-tailwind": "tailwindcss -m -c tailwind.admin.config.js -o ./build/admin_tailwind.css",
+        "build-admin:run-rollup": "rollup --config rollup.admin.config.js",
+        "build-admin:run-merge": "node mergeCss.js admin"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^17.0.0",
@@ -17,6 +22,7 @@
         "rollup-plugin-css-only": "^3.1.0",
         "rollup-plugin-svelte": "^7.0.0",
         "rollup-plugin-terser": "^7.0.0",
-        "svelte": "^3.0.0"
+        "svelte": "^3.0.0",
+        "tailwindcss": "^3.1.8"
     }
 }

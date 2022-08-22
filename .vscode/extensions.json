@@ -2,6 +2,7 @@
     "recommendations": [
         "ms-python.python",
         "svelte.svelte-vscode",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
     ]
 }
