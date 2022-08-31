@@ -58,89 +58,10 @@
         <input id="name" type="text" bind:value={name} />
     </form>
 </div>
-<div class="grid grid-cols-4 auto-rows-auto gap-y-2 gap-x-64">
+<div class="grid grid-cols-3 gap-4 text-sm w-max font-bold text-white text-center">
     {#each scoutList as scout, i}
-        <!-- {#if i % cols == 0}
-                    <tr>
-                        {#each Array(cols) as _, j}
-                            {#if scoutList[(i / cols) * cols + j]}
-                                <td>
-                                    <button
-                                        class:enabled={scoutList[(i / cols) * cols + j].enabled}
-                                        on:click={() => toggle(scoutList[(i / cols) * cols + j])}
-                                    >
-                                        {scoutList[(i / cols) * cols + j].name}
-                                    </button>
-                                </td>
-                                <td>
-                                    <button class:remove on:click={() => remove(scoutList[(i / cols) * cols + j])}>
-                                        &times;
-                                    </button>
-                                </td>
-                            {/if}
-                        {/each}
-                        
-                    </tr>
-                {/if} -->
-
-        <div class="card w-96 bg-success shadow-xl">
-  <div class="card-body">
-    <h2 class="card-title">Card title!</h2>
-    <p>If a dog chews shoes whose shoes does he choose?</p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Buy Now</button>
-    </div>
-  </div>
-</div>
+        <button class:enabled={scoutList[i].enabled} on:click={() => toggle(scoutList[i])}>
+            {scoutList[i].name}
+        </button>
     {/each}
 </div>
-
-<style>
-    div,
-    h1 {
-        color: #333;
-        max-width: 300px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell,
-            "Helvetica Neue", sans-serif;
-    }
-    #name {
-        width: 100%;
-    }
-    form {
-        margin-bottom: 0.5em;
-    }
-    input[type="text"] {
-        outline: none;
-        margin: 0;
-    }
-    input[type="text"]:focus {
-        border-color: #b53fe8;
-        box-shadow: 0 0 2px #b53fe8;
-    }
-
-    label {
-        display: block;
-        text-transform: uppercase;
-        font-size: 0.8em;
-        color: #777;
-        opacity: 1;
-    }
-    button {
-        border: 0;
-        cursor: pointer;
-        border-radius: 6px;
-        padding: 14% 24%;
-        font-weight: bold;
-        box-shadow: 1px 2px 3px;
-        background: #ea4566;
-    }
-    .enabled {
-        background: #11dd42;
-    }
-    .remove {
-        background: #120fbf;
-        color: #bfad0f;
-        font-size: 12px;
-        padding: 10px;
-    }
-</style>
