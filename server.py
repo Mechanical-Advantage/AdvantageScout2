@@ -581,8 +581,7 @@ class Admin(object):
 
     @cherrypy.expose
     def get_uploaded(self):
-        game_result = gamedb_connect()
-        conn_game = game_result["conn"]
+        conn_game = gamedb_connect()
         cur_game = conn_game.cursor()
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
