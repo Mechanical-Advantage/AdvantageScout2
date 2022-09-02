@@ -5,13 +5,8 @@
     import ScoutList from "./ScoutList.svelte";
     let dropBoxHeight = 300;
     let addScoutEntry = "";
-    let availableScouts = [];
-    let tempEnabled = [];
-    let tempDisabled = [];
-
     let disabled = [];
     let enabled = [];
-    console.log("orig enabled", enabled);
 
     async function getScouts() {
         const response = await fetch("/admin/get_scouts", { method: "GET" });
@@ -129,7 +124,7 @@
     }
 </script>
 
-<div class="z-20 w-fit h-fit" on:mousemove={mouseCoordHandler} on:mouseup={mouseUp}>
+<div class=" w-fit h-fit" on:mousemove={mouseCoordHandler} on:mouseup={mouseUp}>
     <label class="btn modal-button btn-success btn-square w-24 h-24 fixed ml-[630px]" for="entry-modal">
         <svg
             xmlns="http://www.w3.org/2000/svg"
