@@ -1,40 +1,46 @@
 <script>
     import ScoutNameBlock from "./ScoutNameBlock.svelte";
-    import { onMount } from "svelte";
+    import { onMount, tick } from "svelte";
     import { activeState, mouseCoords, movin, withinBox, withinTrash } from "./ScoutSelectorStores";
+    import ScoutList from "./ScoutList.svelte";
     let dropBoxHeight = 300;
     let addScoutEntry = "";
     let availableScouts = [];
+    let tempEnabled = [];
+    let tempDisabled = [];
 
-    onMount(async () => {
+    let disabled = [];
+    let enabled = [];
+    console.log("orig enabled", enabled);
+
+    async function getScouts() {
         const response = await fetch("/admin/get_scouts", { method: "GET" });
         const data = await response.json();
-        availableScouts = data;
-    });
-
-    console.log(availableScouts);
-    let disabled = ["Ayush Kulkarni", "Aryan Kulkarni", "Keith White", "Connor Horn", "Manthan Acharya", "Keith Crowe"];
-    let enabled = [
-        "Cameron Earle",
-        "A Very-Long-Name for Testing Purposes",
-        "",
-        "1",
-        "Minecraft Steve",
-        "FRC Team 12345 - The iGoblins",
-        "Gryffin"
-    ];
-
-    for (let i = 0; i < availableScouts.length; i++) {
-        if (availableScouts[i]["enabled"] == true) {
-            enabled.push(availableScouts[i]["name"]);
-        } else {
-            disabled.push(availableScouts[i]["name"]);
-        }
+        return data;
     }
+    let availableScoutsPromise = getScouts();
 
     function testFunc() {
         alert("Hello World");
     }
+
+    async function processScouts() {
+        await availableScoutsPromise;
+        let tempName = "";
+        availableScoutsPromise.then((data) => {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i]["enabled"] == true) {
+                    enabled.push(data[i]["name"]);
+                } else {
+                    disabled.push(data[i]["name"]);
+                }
+            }
+            enabled = enabled;
+            disabled = disabled;
+        });
+    }
+
+    let scoutStatus = processScouts();
 
     let dropBoxRect = document.getElementById("dropBox");
     let trashRect = document.getElementById("trash");
