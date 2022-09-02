@@ -20,6 +20,15 @@
     }
     let availableScoutsPromise = getScouts();
 
+    async function doPost(scoutName, actionUrl) {
+        const formData = new FormData();
+        formData.append("scout", scoutName);
+        const res = await fetch(actionUrl, {
+            method: "POST",
+            body: formData
+        });
+    }
+
     function testFunc() {
         alert("Hello World");
     }
@@ -92,6 +101,7 @@
         console.log("disable");
         enabled = enabled.filter((e) => e !== event.detail.text);
         disabled.unshift(event.detail.text);
+        doPost(event.detail.text, "/admin/toggle_scout");
         enabled = enabled;
         disabled = disabled;
     }
@@ -100,6 +110,7 @@
         console.log("enable");
         disabled = disabled.filter((e) => e !== event.detail.text);
         enabled.push(event.detail.text);
+        doPost(event.detail.text, "/admin/toggle_scout");
         enabled = enabled;
         disabled = disabled;
     }
