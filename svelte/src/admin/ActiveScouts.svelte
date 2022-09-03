@@ -113,18 +113,23 @@
     function deleteName(event) {
         disabled = disabled.filter((e) => e !== event.detail.text);
         enabled = enabled.filter((e) => e !== event.detail.text);
+        doPost(event.detail.text, "/admin/remove_scout");
     }
 
     function addName() {
         if (!disabled.includes(addScoutEntry) && !enabled.includes(addScoutEntry)) {
             disabled.unshift(addScoutEntry);
+            console.log("Adding Scout");
+            if (addScoutEntry != "") {
+                doPost(addScoutEntry, "/admin/add_scout");
+            }
             addScoutEntry = "";
         }
         disabled = disabled;
     }
 </script>
 
-<div class=" w-fit h-fit" on:mousemove={mouseCoordHandler} on:mouseup={mouseUp}>
+<div class="z-20 w-fit h-fit" on:mousemove={mouseCoordHandler} on:mouseup={mouseUp}>
     <label class="btn modal-button btn-success btn-square w-24 h-24 fixed ml-[630px]" for="entry-modal">
         <svg
             xmlns="http://www.w3.org/2000/svg"
