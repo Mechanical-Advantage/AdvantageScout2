@@ -363,7 +363,7 @@ class Admin(object):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
         cur_global.execute(
-            "INSERT INTO scouts(name,enabled) VALUES (?,1)", (scout,))
+            "INSERT INTO scouts(name,enabled) VALUES (?,0)", (scout,))
         conn_global.commit()
         conn_global.close()
         return
