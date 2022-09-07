@@ -35,12 +35,12 @@
     //let entries = Object.entries(obj);
 
     onMount(async () => {
-        fetch("http://127.0.0.1:8000/get_devices", {
+        fetch("/admin/get_devices", {
             method: "GET"
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                console.log(" ");
             })
             .catch((error) => {
                 console.log(error);
