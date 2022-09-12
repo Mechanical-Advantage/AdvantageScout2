@@ -23,15 +23,21 @@
     });
     async function doPost(data, actionUrl) {
         const formData = new FormData();
+        console.log("data length".data.length);
+        for (let i = 0; i < data.length; i++) {
+            formData.append("team", data[i]["team"]);
+            formData.append("scout", data[i]["scout"]);
+        }
+
         const res = await fetch(actionUrl, {
             method: "POST",
-            data: json.stringify(formData)
+            data: JSON.stringify(formData)
         });
     }
     async function getScoutPrefs() {
         const response = await fetch("/admin/get_scoutprefs", { method: "GET" });
-        const data = await response.json();
-        scoutPrefs = data;
+        const prefs = await response.json();
+        data = prefs;
     }
     function addPref() {
         let present = false;
@@ -47,6 +53,8 @@
             addPrefTeam = "";
             data = data;
         }
+        console.log("trying to post");
+        doPost(data, "/admin/set_scoutprefs");
     }
 
     function addBulkEntry() {

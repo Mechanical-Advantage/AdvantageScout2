@@ -1,17 +1,20 @@
 <script>
-    import {spring} from 'svelte/motion';
-    import {pannable} from './pannable.js';
-    import {createEventDispatcher} from "svelte";
-    import {withinBox, movin, withinTrash, activeState} from "./ScoutSelectorStores";
+    import { spring } from "svelte/motion";
+    import { pannable } from "./pannable.js";
+    import { createEventDispatcher } from "svelte";
+    import { withinBox, movin, withinTrash, activeState } from "./ScoutSelectorStores";
 
-    let m = {x: 0, y: 0};
+    let m = { x: 0, y: 0 };
     export let name, enabled;
     const dispatch = createEventDispatcher();
 
-    const coords = spring({x: 0, y: 0}, {
-        stiffness: 0.1,
-        damping: 0.1
-    });
+    const coords = spring(
+        { x: 0, y: 0 },
+        {
+            stiffness: 0.1,
+            damping: 0.1
+        }
+    );
 
     function handlePanStart() {
         coords.stiffness = coords.damping = 1;
@@ -20,7 +23,7 @@
     }
 
     function handlePanMove(event) {
-        coords.update($coords => ({
+        coords.update(($coords) => ({
             x: $coords.x + event.detail.dx,
             y: $coords.y + event.detail.dy
         }));
@@ -42,7 +45,7 @@
 
         coords.stiffness = 0.2;
         coords.damping = 0.4;
-        coords.set({x: 0, y: 0});
+        coords.set({ x: 0, y: 0 });
     }
 
     function handleMousemove(e) {
@@ -69,22 +72,22 @@
     }
 
     function doubleClick() {
-        if(enabled){
+        if (enabled) {
             disableName();
-        }
-        else{
+        } else {
             enableName();
         }
     }
 </script>
 
-<div class="box"
-     use:pannable
-     on:panstart={handlePanStart}
-     on:panmove={handlePanMove}
-     on:panend={handlePanEnd}
-     on:dblclick={doubleClick}
-     style="transform:
+<div
+    class="box"
+    use:pannable
+    on:panstart={handlePanStart}
+    on:panmove={handlePanMove}
+    on:panend={handlePanEnd}
+    on:dblclick={doubleClick}
+    style="transform:
 		translate({$coords.x}px,{$coords.y}px);
 background-color: {enabled ? '#ffa600' : '#1600d9'};"
 >
@@ -94,7 +97,7 @@ background-color: {enabled ? '#ffa600' : '#1600d9'};"
 <style>
     .box {
         --width: 100px;
-        --height: 100px;
+        --height: 50px;
         position: absolute;
         width: var(--width);
         height: var(--height);
@@ -110,5 +113,4 @@ background-color: {enabled ? '#ffa600' : '#1600d9'};"
         flex-direction: column;
         /* Column | row */
     }
-
 </style>

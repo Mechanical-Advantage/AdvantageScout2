@@ -169,7 +169,7 @@
     >
         <div on:mousemove={mouseCoordHandler}>
             <div
-                class="grid  grid-cols-4 grid-rows-none text-sm gap-32 w-fit h-fit mt-10 ml-[55px] z-30 relative overflow-visible"
+                class="grid  grid-cols-4 grid-rows-none text-sm gap-x-32 gap-y-16 w-fit h-fit mt-10 ml-[55px] z-30 relative overflow-visible"
             >
                 {#each enabled as name (name)}
                     <div class="box row-span-1  col-span-1">
@@ -182,7 +182,7 @@
         </div>
     </div>
     <div
-        class="grid grid-cols-4 grid-rows-none text-sm gap-32 w-fit h-fit mt-10 ml-[70px] z-30 relative overflow-visible"
+        class="grid grid-cols-4 grid-rows-none text-sm gap-x-32 gap-y-16 w-fit h-fit mt-10 ml-[70px] z-30 relative overflow-visible"
     >
         {#each disabled as name (name)}
             <div class="box row-span-1  col-span-1">

@@ -33,7 +33,6 @@
             mouseY = clientY;
             layerY = ghost.parentNode.getBoundingClientRect().y;
         }
-        console.log(data);
     }
 
     // touchEnter handler emulates the mouseenter event for touch input
@@ -46,6 +45,19 @@
             lastTarget = target;
             dragEnter(ev, target);
         }
+    }
+    async function doPost(data, actionUrl) {
+        const formData = new FormData();
+        for (let i = 0; i < data.length; i++) {
+            formData.append("team", data[i].team);
+            formData.append("scout", data[i].scout);
+        }
+        console.log("this is the formdata", formData.getAll("team"));
+
+        const res = await fetch(actionUrl, {
+            method: "POST",
+            data: formData
+        });
     }
 
     function dragEnter(ev, target) {
@@ -60,6 +72,9 @@
         let temp = data[from];
         data = [...data.slice(0, from), ...data.slice(from + 1)];
         data = [...data.slice(0, to), temp, ...data.slice(to)];
+        data = data;
+
+        doPost(data, "/admin/set_scoutprefs");
     }
 
     function release(ev) {
