@@ -48,17 +48,18 @@
 
     let dropBoxRect = document.getElementById("dropBox");
     let trashRect = document.getElementById("trash");
-    if (enabled.length > 8) {
-        dropBoxHeight = 300 + Math.ceil((enabled.length - 8) / 4) * 125;
-    } else {
-        dropBoxHeight = 300;
+    getDropBoxHeight();
+
+    function getDropBoxHeight() {
+        if (enabled.length > 8) {
+            return (dropBoxHeight = 200 + Math.ceil((enabled.length - 8) / 4) * 65);
+        } else {
+            return (dropBoxHeight = 200);
+        }
     }
     function mouseCoordHandler(e) {
-        if (enabled.length > 8) {
-            dropBoxHeight = 300 + Math.ceil((enabled.length - 8) / 4) * 125;
-        } else {
-            dropBoxHeight = 300;
-        }
+        getDropBoxHeight();
+
         console.log($withinBox);
         dropBoxRect = document.getElementById("dropBox");
         let trashRect = document.getElementById("trash");
@@ -85,11 +86,7 @@
     }
 
     function mouseUp() {
-        if (enabled.length > 8) {
-            dropBoxHeight = 300 + Math.ceil((enabled.length - 8) / 4) * 125;
-        } else {
-            dropBoxHeight = 300;
-        }
+        getDropBoxHeight();
     }
 
     function disable(event) {
