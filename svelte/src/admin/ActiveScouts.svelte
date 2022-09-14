@@ -128,7 +128,7 @@
 </script>
 
 <div class="z-20 w-fit h-fit" on:mousemove={mouseCoordHandler} on:mouseup={mouseUp}>
-    <label class="btn modal-button btn-success btn-square w-24 h-24 fixed ml-[630px]" for="entry-modal">
+    <label class="btn modal-button btn-success btn-square w-24 h-24 absolute ml-[630px]" for="entry-modal">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -148,7 +148,9 @@
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke={$withinTrash && $movin ? "red" : "white"}
-        class="{$withinTrash && $movin ? 'w-32 h-32 ml-[615px] mt-[110px]' : 'w-24 h-24 ml-[630px] mt-[125px]'} fixed "
+        class="{$withinTrash && $movin
+            ? 'w-32 h-32 ml-[615px] mt-[110px]'
+            : 'w-24 h-24 ml-[630px] mt-[125px]'} absolute "
     >
         <path
             stroke-linecap="round"

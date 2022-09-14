@@ -8,4 +8,6 @@
 
 <ActiveScouts />
 
-<ScoutPrefsv2 />
+<div class="ml-[900px] -mt-[250px]">
+    <ScoutPrefsv2 />
+</div>

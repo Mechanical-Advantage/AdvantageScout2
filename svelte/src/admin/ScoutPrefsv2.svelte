@@ -18,8 +18,7 @@
     ];
     onMount(async () => {
         const response = await fetch("/admin/get_scoutprefs", { method: "GET" });
-        const prefs = await response.json();
-        data = prefs;
+        data = await response.json();
     });
     async function doPost(data, actionUrl) {
         const formData = new FormData();
@@ -87,22 +86,22 @@
     }
 </script>
 
-<main class="fixed">
+<main class="absolute">
     <p />
 
-    <div class="form-control w-[100px] fixed z-40">
-        <label class="cursor-pointer label fixed ml-[282px] mt-[90px]">
-            <span class="label-text text-white font-bold fixed">Delete</span>
+    <div class="form-control w-[100px] absolute z-40">
+        <label class="cursor-pointer label absolute ml-[282px] mt-[90px]">
+            <span class="label-text text-white font-bold absolute">Delete</span>
             <input
                 type="checkbox"
                 scout="removesItems"
                 bind:checked={removesItems}
-                class="checkbox checkbox-lg checkbox-accent fixed mt-[60px] ml-[5px]"
+                class="checkbox checkbox-lg checkbox-accent absolute mt-[60px] ml-[5px]"
             />
         </label>
     </div>
 
-    <label class="btn modal-button btn-success btn-square w-20 h-20 z-50 fixed ml-[270px]" for="entry-modal-2">
+    <label class="btn modal-button btn-success btn-square w-20 h-20 z-50 absolute ml-[270px]" for="entry-modal-2">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -115,7 +114,7 @@
         </svg>
     </label>
 
-    <div class="w-[250px] fixed">
+    <div class="w-[250px] absolute">
         <DragDropList bind:data {removesItems} />
     </div>
 
@@ -139,7 +138,7 @@
                 <label
                     type="button"
                     for="bulk-modal"
-                    class="btn btn-circle btn-warning modal-button fixed btn-xs text-4xs -mt-[10px] -ml-[10px]"
+                    class="btn btn-circle btn-warning modal-button absolute btn-xs text-4xs -mt-[10px] -ml-[10px]"
                     on:click={resetBulk}
                 >
                     ...
@@ -166,7 +165,7 @@
                         bind:value={bulkEntryTeams[i]}
                     />
                 {/each}
-                <button class="btn fixed -ml-[180px] mt-[60px] btn-xs" on:click={addBulkEntry}>
+                <button class="btn absolute -ml-[180px] mt-[60px] btn-xs" on:click={addBulkEntry}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -180,7 +179,7 @@
                 </button>
                 <input
                     type="submit"
-                    class="btn btn-success w-16 fixed ml-3 mt-5"
+                    class="btn btn-success w-16 absolute ml-3 mt-5"
                     on:click={submitBulk}
                     value="Submit"
                 />
