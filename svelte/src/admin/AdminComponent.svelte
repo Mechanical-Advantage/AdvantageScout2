@@ -6,8 +6,13 @@
     import ScoutPrefsv2 from "./ScoutPrefsv2.svelte";
 </script>
 
-<ActiveScouts />
+<div class="relative">
+    <ActiveScouts />
+</div>
+<div class="absolute ml-[50px] mt-[100px]">
+    <MatchTable />
+</div>
 
-<div class="ml-[900px] -mt-[250px]">
+<div class="absolute top-10 ml-[900px]">
     <ScoutPrefsv2 />
 </div>

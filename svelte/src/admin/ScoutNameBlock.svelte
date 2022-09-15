@@ -89,8 +89,8 @@
     on:dblclick={doubleClick}
     style="transform:
 		translate({$coords.x}px,{$coords.y}px);
-background-color: {enabled ? '#54ec4e' : '#1600d9'}; 
-color: {enabled ? '#FFFFFF' : '#000000'}"
+background-color: {enabled ? '#47b45d' : '#1600d9'}; 
+color: {enabled ? '#FFFFFF' : '#FFFFFF'}"
 >
     {name}
 </div>

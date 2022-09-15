@@ -87,11 +87,11 @@
     }
 
     .red {
-        background-color: rgba(255, 0, 0, 0.5);
+        background-color: rgb(255, 0, 0);
     }
 
     .blue {
-        background-color: rgba(0, 0, 255, 0.5);
+        background-color: rgba(0, 0, 255);
     }
 
     .uploaded {
