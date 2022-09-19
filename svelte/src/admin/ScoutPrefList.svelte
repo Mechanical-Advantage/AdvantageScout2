@@ -49,13 +49,7 @@
     }
     async function doPost(data, actionUrl) {
         const formData = new FormData();
-
-        //       for (let i = 0; i < data.length; i++) {
-        //           formData.append("team", data[i].team) + "," + "scout", data[i];
-        //           //formData.append("scout", data[i].scout);
-        //      }
         formData.append("data", JSON.stringify(data));
-
         const res = await fetch(actionUrl, {
             method: "POST",
             body: formData
@@ -85,6 +79,7 @@
 
     function removeDatum(index) {
         data = [...data.slice(0, index), ...data.slice(index + 1)];
+        doPost(data, "/admin/set_scoutprefs");
     }
 </script>
 

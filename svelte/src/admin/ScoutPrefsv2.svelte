@@ -49,7 +49,7 @@
             addPrefTeam = "";
             data = data;
         }
-        console.log("trying to post");
+
         doPost(data, "/admin/set_scoutprefs");
     }
 
