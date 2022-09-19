@@ -22,15 +22,12 @@
     });
     async function doPost(data, actionUrl) {
         const formData = new FormData();
-        console.log("data length".data.length);
-        for (let i = 0; i < data.length; i++) {
-            formData.append("team", data[i]["team"]);
-            formData.append("scout", data[i]["scout"]);
-        }
+
+        formData.append("data", JSON.stringify(data));
 
         const res = await fetch(actionUrl, {
             method: "POST",
-            data: JSON.stringify(formData)
+            body: formData
         });
     }
     async function getScoutPrefs() {

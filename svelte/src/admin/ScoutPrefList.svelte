@@ -1,5 +1,6 @@
 <script>
     import { flip } from "svelte/animate";
+    import { dataset_dev } from "svelte/internal";
 
     export let data = [];
     export let removesItems = false;
@@ -48,15 +49,16 @@
     }
     async function doPost(data, actionUrl) {
         const formData = new FormData();
-        for (let i = 0; i < data.length; i++) {
-            formData.append("team", data[i].team);
-            formData.append("scout", data[i].scout);
-        }
-        console.log("this is the formdata", formData.getAll("team"));
+
+        //       for (let i = 0; i < data.length; i++) {
+        //           formData.append("team", data[i].team) + "," + "scout", data[i];
+        //           //formData.append("scout", data[i].scout);
+        //      }
+        formData.append("data", JSON.stringify(data));
 
         const res = await fetch(actionUrl, {
             method: "POST",
-            data: formData
+            body: formData
         });
     }
 

@@ -628,12 +628,12 @@ class Admin(object):
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
 
-        #cur_global.execute("DELETE FROM scout_prefs")
+        cur_global.execute("DELETE FROM scout_prefs")
         scout_prefs = json.loads(data)
-        print("scout prefs", scout_prefs)
+
         for i in range(len(scout_prefs)):
-            #cur_global.execute("INSERT INTO scout_prefs(priority,team,scout) VALUES (?,?,?)", (i, scout_prefs[i]["team"], scout_prefs[i]["scout"]))
-            print("")
+            cur_global.execute("INSERT INTO scout_prefs(priority,team,scout) VALUES (?,?,?)",
+                               (i, scout_prefs[i]["team"], scout_prefs[i]["scout"]))
         conn_global.commit()
         conn_global.close()
 
