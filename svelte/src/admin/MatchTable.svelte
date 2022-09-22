@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import Switch from "./Switch.svelte";
 
     // let matches = [
     //     { teams: [6328, 2713, 6328, 4176, 6367, 5563], uploaded: [true, true, true, true, true, true] },
@@ -22,12 +23,58 @@
         matches = data;
     });
 
+    let cur_match = 17;
+    let sliderValue;
+
+    let smallSet = matches.slice(cur_match - 2, cur_match + 3);
+
     // function deleteRow(rowToBeDeleted) {
     //     data = data.filter((row) => row != rowToBeDeleted);
     // }
 </script>
 
+<Switch bind:value={sliderValue} label="Full Schedule" fontSize={20} design="slider" />
+<p>
+    Switch is {sliderValue}
+</p>
+
 <main>
+    <table>
+        <thead>
+            <tr>
+                <th>match</th>
+                <th class="red">R1</th>
+                <th class="red">R2</th>
+                <th class="red">R3</th>
+                <th class="blue">B1</th>
+                <th class="blue">B2</th>
+                <th class="blue">B3</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {#each smallSet as match, i}
+                <tr />
+                <td class={match.teams.includes(6328) ? "matchUs" : "match"}>match {i + 1}</td>
+                {#each match.teams as team, i}
+                    <td
+                        class={team == 6328
+                            ? match.uploaded[i]
+                                ? "uploadedUs"
+                                : "notUploadedUs"
+                            : match.uploaded[i]
+                            ? "uploaded"
+                            : "notUploaded"}
+                    >
+                        {team}
+                    </td>
+                {/each}
+            {/each}
+        </tbody>
+    </table>
+</main>
+
+<!-- <main>
     <table>
         <thead>
             <tr>
@@ -61,8 +108,7 @@
             {/each}
         </tbody>
     </table>
-</main>
-
+</main> -->
 <style>
     table {
         border-collapse: collapse;

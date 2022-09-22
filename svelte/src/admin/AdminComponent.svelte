@@ -2,17 +2,14 @@
     import Config from "./Config.svelte";
     import ScoutList from "./ScoutList.svelte";
     import MatchTable from "./MatchTable.svelte";
-    import ActiveScouts from "./ActiveScouts.svelte";
-    import ScoutPrefsv2 from "./ScoutPrefsv2.svelte";
+    import Canvas from "./Canvas.svelte";
+    import AppComponent from "../app/AppComponent.svelte";
+    import FieldSetButton from "./FieldSetButton.svelte";
 </script>
 
-<div class="relative">
-    <ActiveScouts />
-</div>
-<div class="absolute ml-[50px] mt-[100px]">
-    <MatchTable />
-</div>
+<Config />
+<ScoutList />
+<MatchTable />
 
-<div class="absolute top-10 ml-[900px]">
-    <ScoutPrefsv2 />
-</div>
+<FieldSetButton />
+<Canvas />

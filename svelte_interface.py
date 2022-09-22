@@ -26,19 +26,19 @@ class SvelteInterface:
         return self._admin_data
 
     def _build(self, is_app, game=""):
-        if is_app:
-            node = subprocess.Popen(["npm", "run", "build-app", "--", game],
-                                    cwd=get_absolute_path("svelte"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        else:
-            node = subprocess.Popen(["npm", "run", "build-admin"],
-                                    cwd=get_absolute_path("svelte"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        code = node.wait()
-        if code == 0:
-            cherrypy.log(
-                ("App" if is_app else "Admin") + " build succeeded")
-        else:
-            cherrypy.log(
-                "WARNING: " + ("App" if is_app else "Admin") + " build failed")
+        # if is_app:
+        #     node = subprocess.Popen(["npm", "run", "build-app", "--", game],
+        #                             cwd=get_absolute_path("svelte"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # else:
+        #     node = subprocess.Popen(["npm", "run", "build-admin"],
+        #                             cwd=get_absolute_path("svelte"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # code = node.wait()
+        # if code == 0:
+        #     cherrypy.log(
+        #         ("App" if is_app else "Admin") + " build succeeded")
+        # else:
+        #     cherrypy.log(
+        #         "WARNING: " + ("App" if is_app else "Admin") + " build failed")
 
         if is_app:
             app_data_tmp = {

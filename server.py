@@ -581,10 +581,15 @@ class Admin(object):
 
     @cherrypy.expose
     def get_uploaded(self):
+ 
         conn_game = gamedb_connect()
         cur_game = conn_game.cursor()
         conn_global = sql.connect(db_global)
         cur_global = conn_global.cursor()
+        gamedb_connect()
+        
+        
+        
 
         event = cur_global.execute(
             "SELECT value FROM config WHERE key='event'").fetchall()[0][0]
