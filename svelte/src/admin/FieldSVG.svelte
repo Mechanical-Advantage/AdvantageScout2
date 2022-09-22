@@ -1,0 +1,53 @@
+<script>
+    import { color } from "./stores.js";
+    import { otherColor } from "./stores.js";
+</script>
+
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:se="http://svg-edit.googlecode.com"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    width="777"
+    height="480"
+>
+    <title>my vector image</title>
+    <!-- Created with Vector Paint - http://www.vectorpaint.yaks.com/ https://chrome.google.com/webstore/detail/hnbpdiengicdefcjecjbnjnoifekhgdo -->
+    <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="#FFFFFF" stroke="none" />
+    <g class="currentLayer" style="">
+        <title>Layer 1</title>
+        <rect
+            fill={$color}
+            stroke="#222222"
+            stroke-width="2"
+            stroke-linejoin="round"
+            stroke-dashoffset=""
+            fill-rule="nonzero"
+            id="svg_1"
+            x="112.63864612579346"
+            y="102"
+            width="233.36135387420654"
+            height="281"
+            style="color: rgb(0, 0, 0);"
+            class=""
+        />
+        <rect
+            fill={$otherColor}
+            stroke="#222222"
+            stroke-width="2"
+            stroke-linejoin="round"
+            stroke-dashoffset=""
+            fill-rule="nonzero"
+            id="svg_3"
+            x="347.03361647953693"
+            y="102.15966391563416"
+            width="234.77311182022095"
+            height="281"
+            style="color: rgb(0, 0, 0);"
+            class=""
+        />
+    </g>
+</svg>
