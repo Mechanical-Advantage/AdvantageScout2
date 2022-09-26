@@ -4,6 +4,7 @@
     import MatchTable from "./MatchTable.svelte";
     import ActiveScouts from "./ActiveScouts.svelte";
     import ScoutPrefsv2 from "./ScoutPrefsv2.svelte";
+    import Devices from "./Devices.svelte";
 </script>
 
 <div class="relative">
@@ -15,4 +16,8 @@
 
 <div class="absolute top-10 ml-[900px]">
     <ScoutPrefsv2 />
+</div>
+
+<div>
+    <Devices/>
 </div>
