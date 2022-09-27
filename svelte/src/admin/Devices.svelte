@@ -164,32 +164,79 @@
         devices = data;
     });
 
+    // if device.last_battery is between 70 - 100, bg-green-500
+    // if device.last_battery is between 30 - 69, bg-yellow-500
+    // if device.last_battery is between 0 - 29, bg-red-500
+
+    const batteryColor = (battery , charge) => {
+        let batteryCharge;
+        let chargeStatus;
+        if (charge == 1) {
+
+             chargeStatus =  "animate-pulse duration-30000 ";
+        }
+        else if (battery < 30){
+            chargeStatus = "animate-pulse duration-1000 ";
+
+        }
+
+        if (battery >= 70) {
+             batteryCharge=  "text-black bg-green-500";
+        } else if (battery >= 30) {
+            batteryCharge = "text-black bg-yellow-500";
+        } else {
+            batteryCharge = "text-white bg-red-500";
+        }
+        return batteryCharge + " " + chargeStatus;
+
+    };
+
+    const scoutStatus = (status) => {
+        if (status == 0) {
+            return "Auto"
+        }
+        else if (status == 1) {
+            return "Teleop"
+        }
+        else if (status == 2) {
+            return "Endgame"
+        }
+        else if (status == 3) {
+            return "Pit Scout"
+        }
+    };
+
 
 </script>
 
-<div class="bg-[#1E3A8A]">
-<div class="overflow-x-auto bg-blue-200">
-    <table class="table">
+
+
+    <table class="table-auto border-separate border-spacing-2">
     <thead>
-      <tr>
+      <tr class="border-slate-700">
         <th>Device Name</th>
         <th>Heartbeat</th>
         <th>Route</th>
         <th>Battery</th>
-        <th>Charging</th>
         <th>Status</th>
+        <th>Team</th>
+        <th>Match</th>
+        <th>Scout Name</th>
       </tr>
     </thead>
-    <tbody >
+    <tbody class="rounded-md">
         {#each devices as device}
-        <tr>
+        <tr >
             
             <td >{device.name}</td>
-            <td>{device.last_heartbeat}</td>
+            <td class="{((device.last_heartbeat > 1646270198) ? "bg-red-900" : "bg-[#f59e0b]")}" >{device.last_heartbeat}</td>
             <td>{device.last_route}</td>
-            <td>{device.last_battery}</td>
-            <td>{device.last_charging}</td>
-            <td>{device.last_status}</td>
+            <td class="{batteryColor(device.last_battery, device.last_charging)}">{device.last_battery}</td>
+            <td>{scoutStatus(device.last_status)}</td>
+            <td>{device.last_team != null ? device.last_team : "No Team"}</td>
+            <td>{device.last_match != null ? device.last_match : "No Matches"}</td>
+            <td>{device.last_scoutname != null ? device.last_scoutname : "No Scout"}</td>
+
         </tr>
         {/each}
 
@@ -199,6 +246,5 @@
 
 
 
-</div>
-</div>
+
  

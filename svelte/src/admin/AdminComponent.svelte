@@ -18,6 +18,6 @@
     <ScoutPrefsv2 />
 </div>
 
-<div>
+<div class="absolute top-10 ml-[1250px]">
     <Devices/>
 </div>
