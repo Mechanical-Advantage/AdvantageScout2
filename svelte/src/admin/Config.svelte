@@ -92,7 +92,7 @@
                 <h3>Scheduling Method:</h3>
                 <select
                     class="scheduling-method"
-                    value={schedulingMethodSelected}
+                    value={schedulingMethodSelected}                 
                     on:change={() => (schedulingMethodAnswer = "")}
                 >
                     {#each SchedulingMethodChoices as question}
@@ -133,47 +133,4 @@
 <button class="btn btn-outline btn-secondary">Button</button>
 <button class="btn btn-outline btn-accent">Button</button>
 
-<style>
-    h3 {
-        width: 200px;
-        max-width: 100%;
-        font-size: 15px;
-        line-height: 2px;
-    }
 
-    h2 {
-        font-size: 20px;
-        line-height: 1.5px;
-    }
-
-    h1 {
-        font-size: 30px;
-        line-height: 1.5px;
-    }
-
-    .config {
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        justify-content: left;
-    }
-    .config > div {
-        display: flex;
-    }
-    .config > div > h3 {
-        margin-bottom: 10px;
-    }
-    .config > div > input {
-        margin-bottom: 10px;
-    }
-    .config > div > select {
-        margin-bottom: 10px;
-    }
-
-    .block-scheduling {
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        justify-content: left;
-    }
-</style>

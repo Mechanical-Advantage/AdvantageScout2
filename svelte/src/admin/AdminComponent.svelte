@@ -5,6 +5,7 @@
     import ActiveScouts from "./ActiveScouts.svelte";
     import ScoutPrefsv2 from "./ScoutPrefsv2.svelte";
     import Devices from "./Devices.svelte";
+    import ConfigModal from "./ConfigModal.svelte";
 </script>
 
 <div class="relative">
@@ -20,4 +21,8 @@
 
 <div class="absolute top-10 ml-[1250px]">
     <Devices/>
+</div>
+
+<div class="absolute bottom">
+    <ConfigModal />   
 </div>
