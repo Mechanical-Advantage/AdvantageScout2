@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
     import {onMount} from "svelte";
     // [
     //     {
@@ -247,4 +247,4 @@
 
 
 
- 
+  -->
