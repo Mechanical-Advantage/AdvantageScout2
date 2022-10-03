@@ -8,7 +8,7 @@ import math
 
 def int_time():
     """Returns the current epoch time as an integer."""
-    return(int(math.floor(time.time())))
+    return (int(math.floor(time.time())))
 
 
 def read_text(path):

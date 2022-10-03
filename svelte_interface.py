@@ -26,11 +26,13 @@ class SvelteInterface:
         return self._admin_data
 
     def _build(self, is_app, game=""):
+        print(get_absolute_path("svelte"))
+        print(game)
         if is_app:
-            node = subprocess.Popen(["npm", "run", "build-app", "--", game],
+            node = subprocess.Popen(["npm", "run", "build-app", "--", game], shell=True,
                                     cwd=get_absolute_path("svelte"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
-            node = subprocess.Popen(["npm", "run", "build-admin"],
+            node = subprocess.Popen(["npm", "run", "build-admin"], shell=True,
                                     cwd=get_absolute_path("svelte"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         code = node.wait()
         if code == 0:
