@@ -1,7 +1,8 @@
 <script>
+    import LoginPage from "./LoginPage.svelte";
 </script>
 
-<main />
+<main><LoginPage /></main>
 
 <style>
 </style>
