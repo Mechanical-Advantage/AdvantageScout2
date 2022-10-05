@@ -1,8 +1,9 @@
 <script>
+    import ButtonGroup from "./ButtonGroup.svelte";
 </script>
 
 <main>
-    <div class="line">
+    <!-- <div class="line">
         <div class="btn-group">
             <button class="btn s">+</button>
             <button class="btn n">0</button>
@@ -18,7 +19,7 @@
         </div>
     </div>
 
-    <div class="dropdown">
+    <div class="dropdown line">
         <label tabindex="0" class="btn m-1 d">Start Position</label>
         <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
             <li><a>Fender</a></li>
@@ -43,6 +44,19 @@
             <button class="btn f">-</button>
         </div>
     </div>
+
+<div class="form-control d">
+    <label class="label cursor-pointer">
+        <span class="label-text">Remember me</span>
+        <input type="checkbox" checked="checked" class="checkbox checkbox-lg" />
+    </label>
+
+</div> -->
+
+    <ButtonGroup class="s" />
+    <ButtonGroup class="f" />
+    <ButtonGroup class="s" />
+    <ButtonGroup class="f" />
 </main>
 
 <style>
@@ -84,5 +98,9 @@
 
     .d {
         background-color: gold;
+    }
+
+    .form-control {
+        width: 150px;
     }
 </style>
