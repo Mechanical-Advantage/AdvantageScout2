@@ -2,11 +2,13 @@
 </script>
 
 <main>
+
     <div class="navbar">
         <button class="btn btn-active">Auto</button>
         <button class="btn btn-active">Tele-Op</button>
         <button class="btn btn-active">End Game</button>
     </div>
+
 </main>
 
 <style>
