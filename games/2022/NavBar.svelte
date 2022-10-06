@@ -19,14 +19,15 @@
     button {
         background-color: rgb(51, 96, 179);
         color: rgb(255, 255, 255);
-        padding-top: 30px;
-        padding-bottom: 30px;
-        width: 600px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        width: 31%;
         margin-top: 10px;
         margin-left: 15px;
         margin-right: 15px;
         text-align: center;
         vertical-align: middle;
         line-height: 0;
+        font-size: 50px;
     }
 </style>

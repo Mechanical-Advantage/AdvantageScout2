@@ -4,9 +4,9 @@
 <main>
     <div class>
         <div class="btn-group">
-            <button class="btn s">+</button>
-            <button class="btn n">0</button>
-            <button class="btn s">-</button>
+            <button class="btn">+</button>
+            <button class="btn">0</button>
+            <button class="btn">-</button>
         </div>
     </div>
 </main>
@@ -15,8 +15,8 @@
     button {
         border: none;
         color: white;
-        padding-top: 50px;
-        padding-bottom: 50px;
+        padding-top: 60px;
+        padding-bottom: 60px;
 
         display: inline-block;
         font-size: 30px;

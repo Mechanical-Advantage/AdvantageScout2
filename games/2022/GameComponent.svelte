@@ -11,5 +11,6 @@
 <style>
     main {
         background-color: rgb(50, 50, 50);
+        overflow: hidden;
     }
 </style>

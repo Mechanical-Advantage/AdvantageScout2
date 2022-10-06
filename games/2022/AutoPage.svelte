@@ -3,7 +3,7 @@
 </script>
 
 <main>
-    <!-- <div class="line">
+    <div class="line">
         <div class="btn-group">
             <button class="btn s">+</button>
             <button class="btn n">0</button>
@@ -45,18 +45,17 @@
         </div>
     </div>
 
-<div class="form-control d">
-    <label class="label cursor-pointer">
-        <span class="label-text">Remember me</span>
-        <input type="checkbox" checked="checked" class="checkbox checkbox-lg" />
-    </label>
+    <div class="form-control d line taxiButton">
+        <label class="label cursor-pointer">
+            <span class="label-text">Taxi?</span>
+            <input type="checkbox" checked="checked" class="checkbox checkbox-lg" />
+        </label>
+    </div>
 
-</div> -->
-
-    <ButtonGroup class="s" />
-    <ButtonGroup class="f" />
-    <ButtonGroup class="s" />
-    <ButtonGroup class="f" />
+    <!-- <ButtonGroup />
+    <ButtonGroup />
+    <ButtonGroup />
+    <ButtonGroup /> -->
 </main>
 
 <style>
@@ -102,5 +101,12 @@
 
     .form-control {
         width: 150px;
+    }
+
+    .taxiButton {
+        width: 200px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        font-size: 50px;
     }
 </style>
