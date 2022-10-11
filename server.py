@@ -6,14 +6,20 @@ from pathlib import Path
 
 import cherrypy
 import tbapy
+import time
+import threading
+import os
 from ws4py.messaging import TextMessage
 from ws4py.server.cherrypyserver import WebSocketPlugin, WebSocketTool
 from ws4py.websocket import WebSocket
+from simple_websocket_server import WebSocketServer, WebSocket
 
 from config import *
 from scheduler import Scheduler
 from svelte_interface import SvelteInterface
 from util import *
+from enum import Enum
+
 
 # Global variables
 tba = tbapy.TBA(tba_key)
@@ -22,6 +28,14 @@ admin_server = None
 svelte_interface = SvelteInterface()
 scheduler = Scheduler()
 admin_clients = []
+
+# Init forwarding variables
+forward_queues = {}
+forward_threads = {}
+
+
+if bt_enable:
+    import serial
 
 
 def init_global():
@@ -659,7 +673,250 @@ class AdminWebSocketHandler(WebSocket):
         self._admin_clients.remove(self)
 
 
+def log(output, before_text=""):
+    if before_text == "":
+        print(time.strftime("[%d/%b/%Y:%H:%M:%S] ") + output)
+    else:
+        print(before_text +
+              time.strftime(" - - [%d/%b/%Y:%H:%M:%S] ") + output)
+
+
+def serial_readline(source, name, mode):
+    # Attempt to connect repeatedly
+    def connect(ser):
+        while True:
+            try:
+                ser.open()
+            except:
+                x = 0
+            else:
+                break
+
+    # Timeout thread, resets line if no data for 3 seconds
+    def timeout():
+        nonlocal full_line
+        while True:
+            time.sleep(0.5)
+            if last_data == -2:
+                break
+            if full_line != "" and time.time() - last_data > 3:
+                log("Request timed out", name)
+                full_line = ""
+
+    full_line = ""
+    last_data = -1
+    timeout = threading.Thread(target=timeout, daemon=True)
+    timeout.start()
+    while True:
+        if mode == serial_mode.WEBSOCKET:
+            wait = True
+            while wait:
+                time.sleep(0.2)
+                try:
+                    wait = len(forward_queues[source]) == 0
+                except:
+                    return (False)
+            line = forward_queues[source].pop(0)
+        else:
+            if source.is_open:
+                line = source.readline().decode("utf-8")
+            else:
+                # Skip if not yet connected
+                line = ""
+
+        last_data = time.time()
+        if line[-5:] == "CONT\n":
+            full_line += line[:-5]
+            if mode == serial_mode.WEBSOCKET:
+                source.send_message("CONT\n")
+            else:
+                source.write("CONT\n".encode("utf-8"))
+        elif line == "" and mode != serial_mode.WEBSOCKET:
+            # Reconnect because device appears to be disconnected (timeout reached)
+            if source.is_open:
+                log("Disconnected, waiting", name)
+            try:
+                source.close()
+            except:
+                x = 0
+            time.sleep(3)
+            log("Trying to connect...", name)
+            connect(source)
+            log("Connected successfully, ready for data", name)
+        else:
+            full_line += line[:-1]
+            break
+    last_data = -2
+    return (full_line)
+
+
+class serial_mode(Enum):
+    INCOMING = 0
+    OUTGOING = 1
+    WEBSOCKET = 2
+
+
+def bluetooth_server(name, mode, client=None):
+    if mode == serial_mode.WEBSOCKET:
+        wait = True
+        while wait:
+            try:
+                wait = len(forward_queues[client]) == 0
+            except:
+                return
+        name = forward_queues[client].pop(0)
+        log("Started forwarding thread", name)
+    else:
+        try:
+            ser = serial.Serial()
+            ser.port = name
+
+            # Open immediately if incoming
+           
+            ser.timeout = 5
+        except:
+            log("WARNING - failed to connect to \"" +
+                name + "\" Is the connection busy?")
+            return
+
+
+
+        type = "outgoing"
+        log("Started Bluetooth server on " + type + " port \"" + name + "\"")
+
+    while True:
+        if mode == serial_mode.WEBSOCKET:
+            raw = serial_readline(client, name, mode)
+        else:
+            raw = serial_readline(ser, name, mode)
+
+        if raw == False:
+            # Shutdown thread
+            return
+
+        try:
+            msg = json.loads(raw)
+        except:
+            log("Unable to parse request", name)
+            if mode == serial_mode.WEBSOCKET:
+                client.send_message("[]\n")
+            else:
+                ser.write("[]\n".encode('utf-8'))
+            continue
+
+        try:
+            if msg[1] == "load_data":
+                config = quickread("cordova/config.xml").split('"')
+                result = {"game": json.loads(main_server().load_game()), "config": json.loads(
+                    main_server().get_config()), "version": config[3]}
+            elif msg[1] == "upload":
+                result = json.loads(main_server().upload(msg[2][0]))
+            elif msg[1] == "heartbeat":
+                data = msg[2]
+                data["device_name"] = msg[0]
+                data["route"] = name
+                result = main_server().heartbeat(**data)
+            elif msg[1] == "get_schedule":
+                result = json.loads(main_server().get_schedule())
+            else:
+                result = "error"
+        except:
+            log("Unable to process request", name)
+            if mode == serial_mode.WEBSOCKET:
+                client.send_message("[]\n")
+            else:
+                ser.write("[]\n".encode('utf-8'))
+        else:
+            response = [msg[0], result]
+            if mode == serial_mode.WEBSOCKET:
+                client.send_message(json.dumps(response) + "\n")
+            else:
+                ser.write((json.dumps(response) + "\n").encode('utf-8'))
+            if bt_showheartbeats or msg[1] != "heartbeat":
+                log("\"" + msg[1] + "\" from device \"" + msg[0] + "\"", name)
+
+# Break data into 2000 byte chunks
+
+
+def serial_writeline(source, name, mode, data):
+    def write_timeout():
+
+        while True:
+            time.sleep(0.5)
+            if last_data == -2:
+                break
+            if output_line != "" and time.time() - last_data > 3:
+                log("Request timed out", name)
+                output_line = ""
+    output_line = ""
+    last_data = -1
+    timeout = threading.Thread(target=timeout, daemon=True)
+    timeout.start()
+
+    continueQueue = []
+    continueQueueLength = 0
+    sendResponse = ''
+    breakFrequency = 2000
+    final = []
+    dataLeft = data
+    while (len(dataLeft) > breakFrequency):
+        continueQueue.append((dataLeft[0:breakFrequency]) + 'CONT')
+        continueQueueLength = len(continueQueue)
+        dataLeft = dataLeft[2000:]
+    continueQueue.append(dataLeft[:])
+
+# TODO
+# build function to write data over serial or WS connection 
+# wait for confirmation on client side
+
+
+
+
+
+
+
+# Forward web socket server
+class forward_server(WebSocket):
+    global forward_clients
+
+    def handle(self):
+        forward_queues[self].append(self.data)
+
+    def connected(self):
+        log("Forwarding web socket opened", self.address[0])
+        forward_queues[self] = []
+        forward_threads[self] = threading.Thread(
+            target=bluetooth_server, args=(None, serial_mode.WEBSOCKET, self))
+        forward_threads[self].start()
+
+    def handle_close(self):
+        log("Forwarding web socket closed", self.address[0])
+        del forward_queues[self]
+        del forward_threads[self]
+
+
+def run_websocket(host, port, server):
+    server = WebSocketServer(host, port, server)
+    log("Starting web socket server on ws://" + host + ":" + str(port))
+    server.serve_forever()
+    log("Stopping web socket server on ws://" + host + ":" + str(port))
+
+
+def quickread(file):
+    file = open(file, "r")
+    result = file.read()
+    file.close()
+    return (result)
+
+
+class main_server(object):
+    @cherrypy.expose
+    def index(self):
+        output = ""
+
+
 if __name__ == "__main__":
+
     # Create databases
     if not Path(db_global).is_file():
         cherrypy.log("Creating new global database")
@@ -675,7 +932,12 @@ if __name__ == "__main__":
     # Start external threads
     svelte_interface.start()
     scheduler.start()
-
+    if bt_enable:
+        bt_servers = []
+        for i in range(len(bt_ports_outgoing)):
+            bt_servers.append(threading.Thread(target=bluetooth_server, args=(
+                bt_ports_outgoing[i], serial_mode.OUTGOING), daemon=True))
+            bt_servers[i].start()
     # Launch web server
     root_server = Root()
     admin_server = Admin()
