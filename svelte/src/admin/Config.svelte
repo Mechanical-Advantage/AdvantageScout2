@@ -37,6 +37,7 @@
     onMount(async () => {
         fetch("/admin/get_devices", {
             method: "GET"
+  
         })
             .then((response) => response.json())
             .then((data) => {

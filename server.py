@@ -839,6 +839,7 @@ def bluetooth_server(name, mode, client=None):
 
 
 def serial_writeline(source, name, mode, data):
+    # do serial ports need to be opened here?
     def write_timeout():
 
         while True:
@@ -850,20 +851,44 @@ def serial_writeline(source, name, mode, data):
                 output_line = ""
     output_line = ""
     last_data = -1
+    #should read and write timouts be separate
     timeout = threading.Thread(target=timeout, daemon=True)
     timeout.start()
-
+    
+    output_line = data
     continueQueue = []
     continueQueueLength = 0
-    sendResponse = ''
-    breakFrequency = 2000
-    final = []
+    breakFrequency = 200
     dataLeft = data
+    
     while (len(dataLeft) > breakFrequency):
         continueQueue.append((dataLeft[0:breakFrequency]) + 'CONT')
         continueQueueLength = len(continueQueue)
         dataLeft = dataLeft[2000:]
     continueQueue.append(dataLeft[:])
+    
+    if len(continueQueue) == 1:
+        if mode == serial_mode.WEBSOCKET:
+            serial.write(json.dumps(continueQueue[0]) + "\n")
+        else:
+            serial.write(json.dumps(continueQueue[0]) + "\n".encode('utf-8'))
+    else:
+        for outputLine in continueQueue:
+            if mode == serial_mode.WEBSOCKET:
+                serial.write(json.dumps(outputLine + "\n"))
+                # wait for a response from websocket connections?
+            else:
+                serial.write(json.dumps(outputLine + "\n".encode('utf-8')))
+                response = source.readline().decode("utf-8")
+                # wait for timeout - how to do this
+                if response != "CONT\n":
+                    log("Bad response from device", name)
+                    return 
+                
+
+        
+        
+
 
 # TODO
 # build function to write data over serial or WS connection 
