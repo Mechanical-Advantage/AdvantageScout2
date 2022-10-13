@@ -9,9 +9,9 @@
         </label>
     </div>
 
-    <label class="label">
+    <!-- <label class="label">
         <span class="label-text">Your Email</span>
-    </label>
+    </label> -->
 
     <label class="swap swap-flip text-5xl">
         <!-- this hidden checkbox controls the state -->

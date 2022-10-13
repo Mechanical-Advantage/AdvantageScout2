@@ -2,13 +2,11 @@
 </script>
 
 <main>
-
     <div class="navbar">
         <button class="btn btn-active">Auto</button>
         <button class="btn btn-active">Tele-Op</button>
         <button class="btn btn-active">End Game</button>
     </div>
-
 </main>
 
 <style>
@@ -16,6 +14,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-top: 30px;
     }
 
     button {

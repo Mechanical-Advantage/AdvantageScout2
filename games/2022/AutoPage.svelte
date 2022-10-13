@@ -19,13 +19,13 @@
         </div>
     </div>
 
-    <div class="dropdown line">
+    <!-- <div class="dropdown line">
         <label tabindex="0" class="btn m-1 d">Start Position</label>
         <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
             <li><a>Fender</a></li>
             <li><a>Tarmac</a></li>
         </ul>
-    </div>
+    </div> -->
 
     <br />
 
@@ -45,12 +45,12 @@
         </div>
     </div>
 
-    <div class="form-control d line taxiButton">
+    <!-- <div class="form-control d line taxiButton">
         <label class="label cursor-pointer">
             <span class="label-text">Taxi?</span>
             <input type="checkbox" checked="checked" class="checkbox checkbox-lg" />
         </label>
-    </div>
+    </div> -->
 
     <!-- <ButtonGroup />
     <ButtonGroup />
@@ -103,10 +103,10 @@
         width: 150px;
     }
 
-    .taxiButton {
+    /* .taxiButton {
         width: 200px;
         padding-top: 50px;
         padding-bottom: 50px;
         font-size: 100px;
-    }
+    } */
 </style>
