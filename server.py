@@ -837,33 +837,17 @@ def bluetooth_server(name, mode, client=None):
 
 
 def serial_writeline(source, name, mode, data):
-    # do serial ports need to be opened here?
-    def write_timeout():
 
-        while True:
-            time.sleep(0.5)
-            if last_data == -2:
-                break
-            if output_line != "" and time.time() - last_data > 3:
-                log("Request timed out", name)
-                output_line = ""
-    output_line = ""
-    last_data = -1
-    # should read and write timouts be separate
-    timeout = threading.Thread(target=timeout, daemon=True)
-    timeout.start()
-
-    output_line = data
+   
     continueQueue = []
-    continueQueueLength = 0
-    breakFrequency = 200
+    breakFrequency = 2000
     dataLeft = data
-
+    
     while (len(dataLeft) > breakFrequency):
         continueQueue.append((dataLeft[0:breakFrequency]) + 'CONT')
-        continueQueueLength = len(continueQueue)
         dataLeft = dataLeft[2000:]
     continueQueue.append(dataLeft[:])
+
 
     for outputLine in continueQueue:
         if mode == serial_mode.WEBSOCKET:
@@ -877,6 +861,44 @@ def serial_writeline(source, name, mode, data):
             if response != "CONT\n":
                 log("Bad response from device", name)
                 return
+
+    
+    if len(continueQueue) == 1:
+        if mode == serial_mode.WEBSOCKET:
+            source.send_message(json.dumps(continueQueue[0]) + "\n")
+        else:
+            serial.write(json.dumps(continueQueue[0]) + "\n".encode('utf-8'))
+        return
+    else:
+        for outputLine in continueQueue:
+            if mode == serial_mode.WEBSOCKET:
+                source.send_message(json.dumps(outputLine + "\n"))
+                wait = True
+                responseTime = time.time()
+                while wait:
+                    time.sleep(0.2)
+                    if time.time() - responseTime > 3:
+                        return (False)
+                    try:
+                        wait = len(forward_queues[source]) == 0
+
+                    except:
+                        return (False)
+                response = forward_queues[source].pop(0)
+            
+            else:
+                serial.write(json.dumps(outputLine + "\n".encode('utf-8')))
+                response = source.readline().decode("utf-8")
+                
+                # wait for timeout - how to do this
+                if response != "CONT\n":
+                    log("Bad response from device", name)
+                    return
+                elif outputLine[:-5] != "CONT\n":
+                    return
+
+                    
+
 
 
 # TODO

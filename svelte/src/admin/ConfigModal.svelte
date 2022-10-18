@@ -40,7 +40,7 @@ let config = {}
     <label class="label">
       <span class="label-text">Game</span>
     </label>
-    <input type="text" placeholder={game} class="input input-bordered" />
+    <input type="submit" placeholder={game} class="input input-bordered" />
     </div>
     <div class="form-control w-full max-w-xs">
     <label class="label">
