@@ -3,14 +3,18 @@
     import AutoPage from "./AutoPage.svelte";
     import LoginPage from "./LoginPage.svelte";
     import ClimbSection from "./ClimbSection.svelte";
+    import EndGamePage from "./EndGamePage.svelte";
 </script>
 
 <main>
-    <div><NavBar /></div>
-    <div class="line"><AutoPage /></div>
-    <div class="line"><ClimbSection /></div>
+    <div class="navbar"><NavBar /></div>
+    <!-- <div class="line"><AutoPage /></div>
+    <div class="line"><ClimbSection /></div>  -->
     <div class="filler" />
-    <!-- <LoginPage /> -->
+
+    <!--<LoginPage /> -->
+
+    <div class="end"><EndGamePage /></div>
 </main>
 
 <style>
@@ -21,9 +25,16 @@
 
     .line {
         display: inline-block;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
     }
 
     .filler {
         padding-top: 1000px;
+    }
+
+    .navbar {
+        margin-bottom: 0px;
+        padding-bottom: 0px;
     }
 </style>

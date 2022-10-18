@@ -15,6 +15,8 @@
         align-items: center;
         justify-content: center;
         padding-top: 30px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
     }
 
     button {
@@ -30,5 +32,6 @@
         vertical-align: middle;
         line-height: 0;
         font-size: 50px;
+        margin-bottom: 0px;
     }
 </style>
