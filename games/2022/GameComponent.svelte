@@ -7,14 +7,15 @@
 </script>
 
 <main>
-    <div class="navbar"><NavBar /></div>
+    <div><LoginPage /></div>
+    <!-- <div class="navbar"><NavBar /></div> -->
     <!-- <div class="line"><AutoPage /></div>
     <div class="line"><ClimbSection /></div>  -->
-    <div class="filler" />
+    <!-- <div class="filler" /> -->
 
     <!--<LoginPage /> -->
 
-    <div class="end"><EndGamePage /></div>
+    <!-- <div class="end"><EndGamePage /></div> -->
 </main>
 
 <style>
