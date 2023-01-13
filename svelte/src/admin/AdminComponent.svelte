@@ -20,9 +20,9 @@
 </div>
 
 <div class="absolute top-10 ml-[1250px]">
-    <Devices/>
+    <Devices />
 </div>
 
-<div class="absolute bottom">
-    <ConfigModal />   
+<div class="absolute ml-[1250px]">
+    <ConfigModal />
 </div>
