@@ -6,6 +6,8 @@ from config import config
 
 ACTIVE_THRESHOLD_SEC = 10
 ADVANCE_UPLOAD_THRESHOLD = 3
+SUPER_ADVANCE_ALLIANCE_THRESHOLD = 2
+
 
 def update_match_scouts(scouts_dict: dict):
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
@@ -22,29 +24,31 @@ def update_match_scouts(scouts_dict: dict):
             pod = None
 
         if pod is None:
-            cur.execute(
-                "SELECT PodNumber FROM scouts_match WHERE Scout = ?", (name,)
-            )
+            cur.execute("SELECT PodNumber FROM scouts_match WHERE Scout = ?", (name,))
             existing = cur.fetchone()
             pod = existing[0] if existing and existing[0] is not None else 1
 
         rows.append((name, active, pod))
 
-    cur.executemany('''
+    cur.executemany(
+        """
         INSERT OR REPLACE INTO scouts_match (Scout, Active, PodNumber)
         VALUES (?, ?, ?)
-    ''', rows)
+    """,
+        rows,
+    )
 
-    cur.execute('DELETE FROM scouts_match WHERE Active = -1')
+    cur.execute("DELETE FROM scouts_match WHERE Active = -1")
 
     conn.commit()
     conn.close()
+
 
 def get_match_scouts():
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
-    cur.execute('SELECT Scout, Active, PodNumber FROM scouts_match')
+    cur.execute("SELECT Scout, Active, PodNumber FROM scouts_match")
     scouts = {
         row["Scout"]: {"Active": row["Active"], "PodNumber": row["PodNumber"]}
         for row in cur.fetchall()
@@ -52,39 +56,54 @@ def get_match_scouts():
     conn.close()
     return scouts
 
+
 def update_super_scouts(scouts_dict: dict):
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
     cur = conn.cursor()
 
     data_to_insert = list(scouts_dict.items())
 
-    cur.executemany('''
+    cur.executemany(
+        """
         INSERT OR REPLACE INTO scouts_super (Scout, Active)
         VALUES (?, ?)
-    ''', data_to_insert)
+    """,
+        data_to_insert,
+    )
 
-    cur.execute('DELETE FROM scouts_super WHERE Active = -1')
+    cur.execute("DELETE FROM scouts_super WHERE Active = -1")
 
     conn.commit()
     conn.close()
 
+
 def get_super_scouts():
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
     cur = conn.cursor()
-    cur.execute('SELECT Scout, Active FROM scouts_super')
+    cur.execute("SELECT Scout, Active FROM scouts_super")
     scouts = dict(cur.fetchall())
     conn.close()
     return scouts
 
+
 def locked_match_numbers(existing_rows: dict, current_match: int, has_upload_fn) -> set:
     locked = {m for m in existing_rows if m < current_match}
-    if current_match in existing_rows and has_upload_fn(current_match, existing_rows[current_match]):
+    if current_match in existing_rows and has_upload_fn(
+        current_match, existing_rows[current_match]
+    ):
         locked.add(current_match)
     return locked
 
 
 def match_row_has_any_upload(match_num, row) -> bool:
-    teams = [row["Blue1"], row["Blue2"], row["Blue3"], row["Red1"], row["Red2"], row["Red3"]]
+    teams = [
+        row["Blue1"],
+        row["Blue2"],
+        row["Blue3"],
+        row["Red1"],
+        row["Red2"],
+        row["Red3"],
+    ]
     return any(is_match_data_uploaded(match_num, t) for t in teams)
 
 
@@ -105,13 +124,15 @@ def create_match_scout_schedule():
     row = cur.fetchone()
     break_size = int(row["Value"])
 
-    cur.execute("SELECT Scout, PodNumber FROM scouts_match WHERE Active = 1 ORDER BY PodNumber")
+    cur.execute(
+        "SELECT Scout, PodNumber FROM scouts_match WHERE Active = 1 ORDER BY PodNumber"
+    )
     scouts_data = cur.fetchall()
 
     pods = {}
     for scout in scouts_data:
-        pod_id = scout['PodNumber']
-        name = scout['Scout']
+        pod_id = scout["PodNumber"]
+        name = scout["Scout"]
 
         if pod_id not in pods:
             pods[pod_id] = []
@@ -125,7 +146,9 @@ def create_match_scout_schedule():
         conn.close()
         return
 
-    cur.execute("SELECT * FROM matches WHERE Match NOT IN ('Break Size', 'Key') ORDER BY CAST(Match AS INTEGER)")
+    cur.execute(
+        "SELECT * FROM matches WHERE Match NOT IN ('Break Size', 'Key') ORDER BY CAST(Match AS INTEGER)"
+    )
     matches = cur.fetchall()
 
     cur.execute("SELECT * FROM schedule_match")
@@ -133,7 +156,9 @@ def create_match_scout_schedule():
     conn.close()
 
     current_match = get_current_match_number()
-    locked = locked_match_numbers(existing_rows, current_match, match_row_has_any_upload)
+    locked = locked_match_numbers(
+        existing_rows, current_match, match_row_has_any_upload
+    )
 
     schedule_data = []
 
@@ -141,12 +166,23 @@ def create_match_scout_schedule():
         match_num = int(match["Match"])
         if match_num in locked:
             existing = existing_rows[match_num]
-            schedule_data.append((
-                existing["Match"], existing["Blue1"], existing["Blue2"], existing["Blue3"],
-                existing["Red1"], existing["Red2"], existing["Red3"],
-                existing["ScoutBlue1"], existing["ScoutBlue2"], existing["ScoutBlue3"],
-                existing["ScoutRed1"], existing["ScoutRed2"], existing["ScoutRed3"],
-            ))
+            schedule_data.append(
+                (
+                    existing["Match"],
+                    existing["Blue1"],
+                    existing["Blue2"],
+                    existing["Blue3"],
+                    existing["Red1"],
+                    existing["Red2"],
+                    existing["Red3"],
+                    existing["ScoutBlue1"],
+                    existing["ScoutBlue2"],
+                    existing["ScoutBlue3"],
+                    existing["ScoutRed1"],
+                    existing["ScoutRed2"],
+                    existing["ScoutRed3"],
+                )
+            )
             continue
 
         pod_index = (i // break_size) % len(sorted_pod_ids)
@@ -160,27 +196,43 @@ def create_match_scout_schedule():
 
         s = rotated[:6]
 
-        schedule_data.append((
-            match['Match'],
-            match['Blue1'], match['Blue2'], match['Blue3'],
-            match['Red1'], match['Red2'], match['Red3'],
-            s[0], s[1], s[2],
-            s[3], s[4], s[5]
-        ))
+        schedule_data.append(
+            (
+                match["Match"],
+                match["Blue1"],
+                match["Blue2"],
+                match["Blue3"],
+                match["Red1"],
+                match["Red2"],
+                match["Red3"],
+                s[0],
+                s[1],
+                s[2],
+                s[3],
+                s[4],
+                s[5],
+            )
+        )
 
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
     cur = conn.cursor()
     cur.execute("DELETE FROM schedule_match")
-    cur.executemany("""
+    cur.executemany(
+        """
         INSERT INTO schedule_match (
             Match, Blue1, Blue2, Blue3, Red1, Red2, Red3,
             ScoutBlue1, ScoutBlue2, ScoutBlue3, ScoutRed1, ScoutRed2, ScoutRed3
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, schedule_data)
+    """,
+        schedule_data,
+    )
 
     conn.commit()
     conn.close()
-    print(f"Schedule generated. Used {len(sorted_pod_ids)} pods. {len(locked)} already-reached match(es) left unchanged.")
+    print(
+        f"Schedule generated. Used {len(sorted_pod_ids)} pods. {len(locked)} already-reached match(es) left unchanged."
+    )
+
 
 def create_super_scout_schedule():
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
@@ -188,7 +240,7 @@ def create_super_scout_schedule():
     cur = conn.cursor()
 
     cur.execute("SELECT Scout FROM scouts_super WHERE Active = 1")
-    scouts_pool = [row['Scout'] for row in cur.fetchall()]
+    scouts_pool = [row["Scout"] for row in cur.fetchall()]
 
     if len(scouts_pool) < 2:
         print("Error: Need at least 2 active scouts to assign to both sides.")
@@ -203,7 +255,9 @@ def create_super_scout_schedule():
     conn.close()
 
     current_match = get_current_match_number()
-    locked = locked_match_numbers(existing_rows, current_match, super_row_has_any_upload)
+    locked = locked_match_numbers(
+        existing_rows, current_match, super_row_has_any_upload
+    )
 
     schedule_data = []
     scout_index = 0
@@ -213,36 +267,53 @@ def create_super_scout_schedule():
         match_num = int(match["Match"])
         if match_num in locked:
             existing = existing_rows[match_num]
-            schedule_data.append((
-                existing["Match"], existing["Blue1"], existing["Blue2"], existing["Blue3"],
-                existing["Red1"], existing["Red2"], existing["Red3"],
-                existing["ScoutBlue"], existing["ScoutRed"],
-            ))
+            schedule_data.append(
+                (
+                    existing["Match"],
+                    existing["Blue1"],
+                    existing["Blue2"],
+                    existing["Blue3"],
+                    existing["Red1"],
+                    existing["Red2"],
+                    existing["Red3"],
+                    existing["ScoutBlue"],
+                    existing["ScoutRed"],
+                )
+            )
             scout_index += 2
             continue
 
         blue_scout = scouts_pool[scout_index % num_scouts]
         red_scout = scouts_pool[(scout_index + 1) % num_scouts]
 
-        schedule_data.append((
-            match['Match'],
-            match['Blue1'], match['Blue2'], match['Blue3'],
-            match['Red1'], match['Red2'], match['Red3'],
-            blue_scout,
-            red_scout,
-        ))
+        schedule_data.append(
+            (
+                match["Match"],
+                match["Blue1"],
+                match["Blue2"],
+                match["Blue3"],
+                match["Red1"],
+                match["Red2"],
+                match["Red3"],
+                blue_scout,
+                red_scout,
+            )
+        )
 
         scout_index += 2
 
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
     cur = conn.cursor()
     cur.execute("DELETE FROM schedule_super")
-    cur.executemany("""
+    cur.executemany(
+        """
         INSERT INTO schedule_super (
             Match, Blue1, Blue2, Blue3, Red1, Red2, Red3,
             ScoutBlue, ScoutRed
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, schedule_data)
+    """,
+        schedule_data,
+    )
 
     conn.commit()
     conn.close()
@@ -260,6 +331,7 @@ def current_match_schedule():
     row = cur.fetchone()
     conn.close()
     return dict(row) if row else None
+
 
 def current_super_schedule():
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
@@ -336,7 +408,9 @@ def current_match_schedule_status():
         return None
     match = row["Match"]
     active = active_scouts("match", match)
-    available_scouts = {name for name, info in get_match_scouts().items() if info["Active"] == 1}
+    available_scouts = {
+        name for name, info in get_match_scouts().items() if info["Active"] == 1
+    }
     slots = {}
     for alliance in ("Blue", "Red"):
         for i in (1, 2, 3):
@@ -357,7 +431,9 @@ def current_super_schedule_status():
         return None
     match = row["Match"]
     active = active_scouts("super", match)
-    available_scouts = {name for name, is_active in get_super_scouts().items() if is_active == 1}
+    available_scouts = {
+        name for name, is_active in get_super_scouts().items() if is_active == 1
+    }
     slots = {}
     for alliance in ("Blue", "Red"):
         scout = row[f"Scout{alliance}"]
@@ -405,13 +481,22 @@ def match_upload_count(match_number, teams):
     return count
 
 
+def super_upload_count(blue_teams, red_teams):
+    count = 0
+    if is_super_data_uploaded("Blue", *blue_teams):
+        count += 1
+    if is_super_data_uploaded("Red", *red_teams):
+        count += 1
+    return count
+
+
 def advance_current_match_if_needed():
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     cur.execute(
-        "SELECT Match, Blue1, Blue2, Blue3, Red1, Red2, Red3 FROM schedule_match "
-        "ORDER BY CAST(Match AS INTEGER)"
+        "SELECT Match, Blue1, Blue2, Blue3, Red1, Red2, Red3 FROM matches "
+        "WHERE Match NOT IN ('Break Size', 'Key') ORDER BY CAST(Match AS INTEGER)"
     )
     matches = cur.fetchall()
     conn.close()
@@ -422,8 +507,15 @@ def advance_current_match_if_needed():
 
     last_ready = None
     for m in matches:
-        teams = [m["Blue1"], m["Blue2"], m["Blue3"], m["Red1"], m["Red2"], m["Red3"]]
-        if match_upload_count(m["Match"], teams) >= ADVANCE_UPLOAD_THRESHOLD:
+        blue_teams = [m["Blue1"], m["Blue2"], m["Blue3"]]
+        red_teams = [m["Red1"], m["Red2"], m["Red3"]]
+        teams = blue_teams + red_teams
+        match_ready = match_upload_count(m["Match"], teams) >= ADVANCE_UPLOAD_THRESHOLD
+        super_ready = (
+            super_upload_count(blue_teams, red_teams)
+            >= SUPER_ADVANCE_ALLIANCE_THRESHOLD
+        )
+        if match_ready or super_ready:
             last_ready = m["Match"]
 
     if last_ready is None:
@@ -453,7 +545,14 @@ def refresh_schedule_from_tba():
     generate_schedule()
 
 
-SCOUT_SLOT_KEYS = ["ScoutBlue1", "ScoutBlue2", "ScoutBlue3", "ScoutRed1", "ScoutRed2", "ScoutRed3"]
+SCOUT_SLOT_KEYS = [
+    "ScoutBlue1",
+    "ScoutBlue2",
+    "ScoutBlue3",
+    "ScoutRed1",
+    "ScoutRed2",
+    "ScoutRed3",
+]
 
 
 def all_matches_upload_status():
@@ -513,10 +612,6 @@ def all_matches_upload_status():
 
 
 def all_super_matches_upload_status():
-    """Same shape of result as all_matches_upload_status, but one slot per
-    alliance (Blue, Red) instead of per team, matching how super scouting
-    assigns one scout to all three robots on a side.
-    """
     conn = sqlite3.connect(config.GLOBAL_DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
@@ -546,7 +641,11 @@ def all_super_matches_upload_status():
         uploaded = []
         scouts = []
         for alliance, scout_key in (("Blue", "ScoutBlue"), ("Red", "ScoutRed")):
-            alliance_teams = [int(m[f"{alliance}1"]), int(m[f"{alliance}2"]), int(m[f"{alliance}3"])]
+            alliance_teams = [
+                int(m[f"{alliance}1"]),
+                int(m[f"{alliance}2"]),
+                int(m[f"{alliance}3"]),
+            ]
             super_cur.execute(
                 f"SELECT Scout FROM {config.SUPER_TABLE} "
                 "WHERE Alliance = ? AND Team1 = ? AND Team2 = ? AND Team3 = ? AND Event = ? "
