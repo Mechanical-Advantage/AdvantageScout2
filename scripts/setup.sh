@@ -4,8 +4,8 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 case "$(uname -s)" in
-  Darwin) REQUIREMENTS="requirements-macos.txt" ;;
-  Linux) REQUIREMENTS="requirements-linux.txt" ;;
+  Darwin) REQUIREMENTS="requirements/requirements-macos.txt" ;;
+  Linux) REQUIREMENTS="requirements/requirements-linux.txt" ;;
   *)
     echo "Unsupported OS: $(uname -s) -- this script supports macOS and Linux only." >&2
     echo "On Windows, run scripts\\setup.bat instead." >&2

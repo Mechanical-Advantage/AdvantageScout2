@@ -24,7 +24,7 @@ if exist .venv (
 echo ==^> Installing Python dependencies from requirements-windows.txt
 call .venv\Scripts\pip install --upgrade pip
 if errorlevel 1 goto :fail
-call .venv\Scripts\pip install -r requirements-windows.txt
+call .venv\Scripts\pip install -r requirements/requirements-windows.txt
 if errorlevel 1 goto :fail
 
 if not exist data mkdir data
