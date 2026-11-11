@@ -33,6 +33,10 @@ server_config = {
     "port": 6328,
 }
 
+data_init.init_database_fields(False)
+global_data.ensure_default_settings()
+config.update_config()
+
 os.makedirs(os.path.join(config.WEB_DIR, "assets"), exist_ok=True)
 os.makedirs(os.path.join(config.WEB_DIR, "fonts"), exist_ok=True)
 os.makedirs(os.path.join(config.WEB_DIR, "images"), exist_ok=True)
@@ -138,7 +142,13 @@ def get_frontend_files() -> list:
             with open(full_path, "rb") as f:
                 raw = f.read()
             mime, _ = mimetypes.guess_type(filename)
-            files.append({"path": rel_path, "mime": mime or "application/octet-stream", "raw": raw})
+            files.append(
+                {
+                    "path": rel_path,
+                    "mime": mime or "application/octet-stream",
+                    "raw": raw,
+                }
+            )
 
     frontend_files_cache["version"] = version
     frontend_files_cache["files"] = files
@@ -171,7 +181,11 @@ def frontend_delta(payload: dict):
                 "literal": delta["literal"],
             }
         )
-    return {"version": version, "blockSize": rsync_delta.BLOCK_SIZE, "files": result_files}
+    return {
+        "version": version,
+        "blockSize": rsync_delta.BLOCK_SIZE,
+        "files": result_files,
+    }
 
 
 @app.get("/api/game_fields/{mode}")
@@ -536,10 +550,6 @@ if __name__ == "__main__":
 
     if args.regen_db:
         data_init.init_database_fields(True)
-    else:
-        data_init.init_database_fields(False)
-    global_data.ensure_default_settings()
-    config.update_config()
 
     local_ip = get_local_ip()
     host_message = f"Hosting at: http://{local_ip}:{args.port}"
