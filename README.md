@@ -2,6 +2,8 @@
 
 Advantage Scout 2 is the new major version of our electronic scouting system [Advantage Scout](https://github.com/Mechanical-Advantage/AdvantageScout). The app consists of a Svelte5 frontend with a python FastAPI server. Bluetooth Low-Energy is used to communicate with the Android tablets. In this version, the scouting laptop acts as the peripheral that the tablets (clients) connect to.
 
+![Banner](/banner.jpg)
+
 ## Setup
 
 ### Prerequisites:
