@@ -1,0 +1,114 @@
+{
+  "auto": {
+    "fields": [
+      { "name": "StartPosition", "type": "Integer", "default": 0 },
+      { "name": "HubFuelSuccess", "type": "Integer", "default": 0 },
+      { "name": "HubFuelFail", "type": "Integer", "default": 0 },
+      { "name": "PassFuelSuccess", "type": "Integer", "default": 0 },
+      { "name": "PassFuelFail", "type": "Integer", "default": 0 },
+      { "name": "FerryFuelSuccess", "type": "Integer", "default": 0 },
+      { "name": "PreLoadedFuelCollect", "type": "Integer", "default": 0 },
+      { "name": "OutpostFuelCollect", "type": "Integer", "default": 0 },
+      { "name": "FloorFuelCollect", "type": "Integer", "default": 0 },
+      { "name": "NeutralFuelCollect", "type": "Integer", "default": 0 },
+      { "name": "ClimbL1", "type": "Integer", "default": 0 },
+      { "name": "ClimbPosition", "type": "Integer", "default": 0 }
+    ]
+  },
+  "tele": {
+    "fields": [
+      { "name": "PreLoadedFuelCollect", "type": "Integer", "default": 0 },
+      { "name": "ClimbL1", "type": "Integer", "default": 0 },
+      { "name": "ClimbL2", "type": "Integer", "default": 0 },
+      { "name": "ClimbL3", "type": "Integer", "default": 0 },
+      { "name": "ClimbPosition", "type": "Integer", "default": 0 },
+      { "name": "ClimbTime", "type": "Integer", "default": 0 }
+    ],
+    "ST": {
+      "fields": [
+        { "name": "HubFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "HubFuelFail", "type": "Integer", "default": 0 },
+        { "name": "PassFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "PassFuelFail", "type": "Integer", "default": 0 },
+        { "name": "FerryFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "OutpostFuelCollect", "type": "Integer", "default": 0 },
+        { "name": "FloorFuelCollect", "type": "Integer", "default": 0 }
+      ]
+    },
+    "S1": {
+      "fields": [
+        { "name": "HubFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "HubFuelFail", "type": "Integer", "default": 0 },
+        { "name": "PassFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "PassFuelFail", "type": "Integer", "default": 0 },
+        { "name": "FerryFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "OutpostFuelCollect", "type": "Integer", "default": 0 },
+        { "name": "FloorFuelCollect", "type": "Integer", "default": 0 }
+      ]
+    },
+    "S2": {
+      "fields": [
+        { "name": "HubFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "HubFuelFail", "type": "Integer", "default": 0 },
+        { "name": "PassFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "PassFuelFail", "type": "Integer", "default": 0 },
+        { "name": "FerryFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "OutpostFuelCollect", "type": "Integer", "default": 0 },
+        { "name": "FloorFuelCollect", "type": "Integer", "default": 0 }
+      ]
+    },
+    "S3": {
+      "fields": [
+        { "name": "HubFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "HubFuelFail", "type": "Integer", "default": 0 },
+        { "name": "PassFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "PassFuelFail", "type": "Integer", "default": 0 },
+        { "name": "FerryFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "OutpostFuelCollect", "type": "Integer", "default": 0 },
+        { "name": "FloorFuelCollect", "type": "Integer", "default": 0 }
+      ]
+    },
+    "S4": {
+      "fields": [
+        { "name": "HubFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "HubFuelFail", "type": "Integer", "default": 0 },
+        { "name": "PassFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "PassFuelFail", "type": "Integer", "default": 0 },
+        { "name": "FerryFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "OutpostFuelCollect", "type": "Integer", "default": 0 },
+        { "name": "FloorFuelCollect", "type": "Integer", "default": 0 }
+      ]
+    },
+    "SE": {
+      "fields": [
+        { "name": "HubFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "HubFuelFail", "type": "Integer", "default": 0 },
+        { "name": "PassFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "PassFuelFail", "type": "Integer", "default": 0 },
+        { "name": "FerryFuelSuccess", "type": "Integer", "default": 0 },
+        { "name": "OutpostFuelCollect", "type": "Integer", "default": 0 },
+        { "name": "FloorFuelCollect", "type": "Integer", "default": 0 }
+      ]
+    }
+  },
+  "postgame": {
+    "fields": [
+      { "name": "PlayingDefenseDuration", "type": "Integer", "default": 0 },
+      { "name": "UnderDefenseDuration", "type": "Integer", "default": 0 },
+      { "name": "BeachedDuration", "type": "Integer", "default": 0 },
+      { "name": "Penalties", "type": "Integer", "default": 0 },
+      { "name": "Disabled", "type": "Integer", "default": 0 },
+      { "name": "DriverRating", "type": "Integer", "default": 0 },
+      { "name": "FuelIntakeRating", "type": "Integer", "default": 0 },
+      { "name": "DefenseRating", "type": "Integer", "default": 0 },
+      { "name": "UnderDefenseRating", "type": "Integer", "default": 0 },
+      { "name": "CrossBumpRating", "type": "Integer", "default": 0 },
+      { "name": "BotState", "type": "Integer", "default": 1 },
+      { "name": "Comment", "type": "Text", "default": " " },
+      { "name": "FuelCycleCountSuccess", "type": "Integer", "default": 0 },
+      { "name": "FuelCycleCountFail", "type": "Integer", "default": 0 },
+      { "name": "GameShift", "type": "Integer", "default": 0 },
+      { "name": "ActiveTab", "type": "Integer", "default": 0 }
+    ]
+  }
+}

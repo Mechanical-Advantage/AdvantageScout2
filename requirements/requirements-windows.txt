@@ -1,0 +1,36 @@
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.13.0
+bleak==3.0.1
+bleak-winrt==1.2.0; python_version < "3.12"
+bless==0.3.0
+CacheControl==0.14.4
+certifi==2026.4.22
+charset-normalizer==3.4.7
+click==8.3.3
+fastapi==0.136.1
+h11==0.16.0
+idna==3.13
+msgpack==1.1.2
+pydantic==2.13.3
+pydantic_core==2.46.3
+pysetupdi @ git+https://github.com/gwangyi/pysetupdi#egg=pysetupdi
+pywin32==312
+python-dotenv==1.2.2
+requests==2.33.1
+starlette==1.0.0
+tbapy==1.3.2
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+urllib3==2.6.3
+uvicorn==0.46.0
+watchfiles==1.1.1
+winrt-runtime==4.1.0
+winrt-Windows.Devices.Bluetooth==4!10.0.28000.2957
+winrt-Windows.Devices.Bluetooth.Advertisement==4!10.0.28000.2957
+winrt-Windows.Devices.Bluetooth.GenericAttributeProfile==4!10.0.28000.2957
+winrt-Windows.Devices.Enumeration==4!10.0.28000.2957
+winrt-Windows.Devices.Radios==4!10.0.28000.2957
+winrt-Windows.Foundation==4!10.0.28000.2957
+winrt-Windows.Foundation.Collections==4!10.0.28000.2957
+winrt-Windows.Storage.Streams==4!10.0.28000.2957

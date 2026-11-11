@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Advantage Scout 2</string>
+    <string name="title_activity_main">Advantage Scout 2</string>
+    <string name="package_name">org.littletonrobotics.advantagescout2</string>
+    <string name="custom_url_scheme">org.littletonrobotics.advantagescout2</string>
+</resources>

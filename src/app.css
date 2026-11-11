@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: mytheme --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "mytheme";
+  default: true;
+  prefersdark: false;
+  color-scheme: dark;
+  --color-base-100: #1a1a1a;
+  --color-base-200: #171717;
+  --color-base-300: #141414;
+  --color-base-content: #d1d1d1;
+  --color-primary: #3b82f6;
+  --color-primary-content: #d6e6ff;
+  --color-secondary: #facc15;
+  --color-secondary-content: #382d00;
+  --color-accent: #012be5;
+  --color-accent-content: #c7d1ff;
+  --color-neutral: #191d24;
+  --color-neutral-content: #c5cedd;
+  --color-info: #3abff8;
+  --color-info-content: #002b3d;
+  --color-success: #19b428;
+  --color-success-content: #002904;
+  --color-warning: #fbe923;
+  --color-warning-content: #383300;
+  --color-error: #fa3939;
+  --color-error-content: #ffd6d6;
+  --radius-selector: 1.9rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@theme {
+  --color-bg: var(--color-base-100);
+  --color-surface: var(--color-neutral);
+  --color-border: #2a2f3a;
+  --color-fg: var(--color-base-content);
+  --color-fg-muted: #6b7280;
+  --color-success-tint: rgba(25, 180, 40, 0.2);
+  --color-danger: var(--color-error);
+  --font-heading: "Robotech GP", serif;
+}
+
+@font-face {
+  font-family: "Robotech GP";
+  src: url("/fonts/ROBOTECHGP.ttf") format("truetype");
+}
+
+.btn {
+  @apply px-2.5 py-0.5 transition-colors duration-150;
+  text-transform: uppercase;
+  animation: legacy-btn-pop 0.25s ease-out;
+}
+.btn:active:hover,
+.btn:active:focus {
+  animation: none;
+  transform: scale(0.95);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-success {
+  background-color: #008000;
+  color: #fff;
+}
+@keyframes legacy-btn-pop {
+  0% {
+    transform: scale(0.98);
+  }
+  40% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

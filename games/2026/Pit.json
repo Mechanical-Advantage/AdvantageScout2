@@ -1,0 +1,118 @@
+{
+  "auto": {
+    "fields": [
+      {
+        "name": "MyTestValue",
+        "type": "Integer",
+        "min": 0,
+        "max": 10,
+        "default": 0,
+        "displayType": "Button",
+        "display": {
+          "name": "My Test Value",
+          "behavior": "hold",
+          "x": 0,
+          "y": 0,
+          "size": [2, 1]
+        }
+      },
+      {
+        "name": "MyTestValue2",
+        "type": "Integer",
+        "displayType": "Button",
+        "display": {
+          "name": "My Test Value 2",
+          "behavior": "hold",
+          "x": 0,
+          "y": 2,
+          "size": [1, 1]
+        }
+      },
+      {
+        "name": "MyTestValue3",
+        "type": "Integer",
+        "displayType": "Button",
+        "display": {
+          "name": "My Test Value 2",
+          "behavior": "hold",
+          "x": 10,
+          "y": 0,
+          "size": [1, 1]
+        }
+      },
+      {
+        "name": "MyTestValue4",
+        "type": "Integer",
+        "min": 0,
+        "max": 10,
+        "displayType": "Button",
+        "display": {
+          "name": "My Test Value 2",
+          "behavior": "hold",
+          "x": 10,
+          "y": 2,
+          "size": [1, 1]
+        }
+      }
+    ]
+  },
+  "tele": {
+    "fields": [
+      {
+        "name": "MyTestValue",
+        "type": "Integer",
+        "min": 0,
+        "max": 10,
+        "default": 0,
+        "displayType": "Button",
+        "display": {
+          "name": "My Test Value Tele",
+          "behavior": "hold",
+          "x": 0,
+          "y": 0,
+          "size": [2, 1]
+        }
+      },
+      {
+        "name": "MyTestValue2",
+        "type": "Integer",
+        "displayType": "Button",
+        "display": {
+          "name": "My Test Value 2",
+          "behavior": "hold",
+          "x": 0,
+          "y": 2,
+          "size": [1, 1]
+        }
+      },
+      {
+        "name": "MyTestValue3",
+        "type": "Integer",
+        "min": 0,
+        "max": 10,
+        "displayType": "Button",
+        "display": {
+          "name": "My Active Test Value 3",
+          "behavior": "hold",
+          "x": 10,
+          "y": 0,
+          "size": [1, 1]
+        }
+      },
+      {
+        "name": "MyTestValue4",
+        "type": "Integer",
+        "min": 0,
+        "max": 10,
+        "displayType": "Button",
+        "display": {
+          "name": "My Test Value 2",
+          "behavior": "hold",
+          "x": 10,
+          "y": 2,
+          "size": [1, 1]
+        }
+      }
+    ]
+  }
+}

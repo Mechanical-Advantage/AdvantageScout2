@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Environment / secrets
+.env
+
+# Local scouting data
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/*.db-journal
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
