@@ -28,7 +28,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Install Python requirements
-pip install -r requirements-[your-os].txt
+pip install -r requirements/requirements-[your-os].txt
 
 # Create the database directory
 mkdir data
@@ -53,7 +53,7 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
 # Install Python requirements
-pip install -r requirements-windows.txt
+pip install -r requirements/requirements-windows.txt
 
 # Create the database directory
 mkdir data
