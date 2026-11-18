@@ -18,9 +18,7 @@
   import { getCachedGameFields, setCachedGameFields } from "@lib/game-fields-cache";
   import { checkForFrontendUpdate, frontendUpdateState } from "@lib/frontend-update.svelte";
   import { flushQueue } from "@lib/upload-queue.svelte";
-  import { getPreferWifi, setPreferWifi } from "@lib/wifi-preference";
-  import { getServerAddress, setServerAddress } from "@lib/server-address";
-  import { devTools, setShowChunkProgress } from "@lib/dev-tools.svelte";
+  import { settings, updateSettings, resetSettings } from "@lib/settings.svelte";
   import { SCHEDULE_POLL_INTERVAL } from "@lib/config";
   import MatchSchedule from "@components/MatchSchedule.svelte";
 
@@ -32,19 +30,6 @@
   let optionsOpen = $state(false);
   let advancedOptions = $state(false);
   let updateStatus: string | null = $state(null);
-  let preferWifi = $state(getPreferWifi());
-  let serverAddress = $state(getServerAddress());
-
-  function togglePreferWifi() {
-    preferWifi = !preferWifi;
-    setPreferWifi(preferWifi);
-  }
-
-  function updateServerAddress(e: Event) {
-    serverAddress = (e.currentTarget as HTMLInputElement).value;
-    setServerAddress(serverAddress);
-  }
-
   let scoutOptionsRetryTimer: ReturnType<typeof setTimeout> | null = null;
 
   async function loadScoutOptions() {
@@ -182,6 +167,7 @@
 
   function clearLocalStorage() {
     localStorage.clear();
+    resetSettings();
     scoutingSession.scout = "";
     scoutingSession.team = "";
     scoutingSession.match = "";
@@ -241,17 +227,34 @@
     {#if updateStatus}
       <p class="text-center text-xs text-fg-muted">{updateStatus}</p>
     {/if}
-    <label class="flex w-full items-center justify-between gap-3">
-      <span class="text-sm text-fg">Prefer Wi-Fi</span>
-      <input type="checkbox" class="toggle toggle-primary" checked={preferWifi} onchange={togglePreferWifi} />
-    </label>
+    {#if isNative}
+      <label class="flex w-full items-center justify-between gap-3">
+        <span class="text-sm text-fg">Prefer Wi-Fi</span>
+        <input
+          type="checkbox"
+          class="toggle toggle-primary"
+          checked={settings.preferWifi}
+          onchange={(e) => updateSettings({ preferWifi: e.currentTarget.checked })}
+        />
+      </label>
+    {:else}
+      <label class="flex w-full items-center justify-between gap-3">
+        <span class="text-sm text-fg">Prefer Bluetooth</span>
+        <input
+          type="checkbox"
+          class="toggle toggle-primary"
+          checked={!settings.preferWifi}
+          onchange={(e) => updateSettings({ preferWifi: !e.currentTarget.checked })}
+        />
+      </label>
+    {/if}
     <label class="flex w-full items-center justify-between gap-3">
       <span class="text-sm text-fg">Dev Tools: Chunk Progress</span>
       <input
         type="checkbox"
         class="toggle toggle-primary"
-        checked={devTools.showChunkProgress}
-        onchange={(e) => setShowChunkProgress((e.currentTarget as HTMLInputElement).checked)}
+        checked={settings.showChunkProgress}
+        onchange={(e) => updateSettings({ showChunkProgress: e.currentTarget.checked })}
       />
     </label>
     {#if isNative}
@@ -261,8 +264,8 @@
           class="input input-bordered w-full"
           type="text"
           placeholder="127.0.0.1:6328"
-          value={serverAddress}
-          oninput={updateServerAddress}
+          value={settings.serverAddress}
+          oninput={(e) => updateSettings({ serverAddress: e.currentTarget.value })}
         />
       </label>
     {/if}

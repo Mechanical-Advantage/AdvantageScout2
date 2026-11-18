@@ -37,7 +37,11 @@
   let deletingDevices: string[] = $state([]);
 
   const filteredDevices = $derived(
-    devices.filter((d) => filterMode === "all" || (d.LastHeartbeat?.mode || "idle") === filterMode),
+    devices.filter(
+      (d) =>
+        filterMode === "all" ||
+        (d.LastHeartbeat?.mode || "idle") === filterMode,
+    ),
   );
 
   function lastSeen(device: DeviceInfo): { text: string; stale: boolean } {
@@ -76,10 +80,6 @@
     onMessageDevices(selectedDevices);
   }
 
-  // Called by Admin.svelte (via bind:this) once a bulk message actually
-  // sends -- selection state lives here, not in the parent, but exiting
-  // selection mode after a successful bulk send is still this table's own
-  // business to finish.
   export function clearSelection(): void {
     selectionMode = false;
     selectedDevices = [];
@@ -89,7 +89,10 @@
 <div class="flex items-center justify-between px-1 py-3">
   <div class="flex items-center gap-3">
     <span class="text-sm font-semibold text-fg">Filter Devices:</span>
-    <select class="select select-bordered select-sm max-w-[200px]" bind:value={filterMode}>
+    <select
+      class="select select-bordered select-sm max-w-[200px]"
+      bind:value={filterMode}
+    >
       {#each FILTER_OPTIONS as opt}
         <option value={opt.value}>{opt.label}</option>
       {/each}
@@ -108,7 +111,9 @@
 </div>
 
 <div class="overflow-x-auto">
-  <table class="table-auto w-full min-w-[900px] border-separate border-spacing-2 text-sm">
+  <table
+    class="table-auto w-full min-w-[900px] border-separate border-spacing-2 text-sm"
+  >
     <thead>
       <tr class="border-b-2 border-accent bg-surface text-left">
         {#if selectionMode}<th class="w-8 px-2 py-2"></th>{/if}
@@ -132,9 +137,11 @@
         {@const isSelected = selectedDevices.includes(device.Name)}
         {@const isDeleting = deletingDevices.includes(device.Name)}
         <tr
-          class="border-b border-border {isDeleting ? 'opacity-50' : ''} {isSelected ? 'bg-[rgba(92,107,192,0.15)]' : ''} {selectionMode
-            ? 'cursor-pointer'
-            : ''}"
+          class="border-b border-border {isDeleting
+            ? 'opacity-50'
+            : ''} {isSelected
+            ? 'bg-[rgba(92,107,192,0.15)]'
+            : ''} {selectionMode ? 'cursor-pointer' : ''}"
           onclick={() => selectionMode && toggleDeviceSelected(device.Name)}
         >
           {#if selectionMode}
@@ -167,7 +174,11 @@
           </td>
           <td class="px-2 py-2 text-fg-muted">{cap(hb?.platform)}</td>
           <td class="px-2 py-2 text-fg-muted">{hb?.version ?? "N/A"}</td>
-          <td class="px-2 py-2 text-center {seen.stale ? 'font-bold text-danger' : 'text-fg-muted'}">{seen.text}</td>
+          <td
+            class="px-2 py-2 text-center {seen.stale
+              ? 'font-bold text-danger'
+              : 'text-fg-muted'}">{seen.text}</td
+          >
           <td class="px-2 py-2 text-fg-muted">{hb?.scout ?? "N/A"}</td>
           <td class="px-2 py-2 text-fg-muted">{hb?.team ?? "N/A"}</td>
           <td class="px-2 py-2 text-fg-muted">{cap(hb?.alliance)}</td>

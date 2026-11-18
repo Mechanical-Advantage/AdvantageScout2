@@ -1,0 +1,22 @@
+{
+  "pit": {
+    "fields": [
+      { "name": "DriveTrain", "type": "Text", "default": "" },
+      { "name": "ProgrammingLanguage", "type": "Text", "default": "" },
+      { "name": "DriveSpeed", "type": "Integer", "default": 0 },
+      { "name": "Width", "type": "Integer", "default": 0 },
+      { "name": "Length", "type": "Integer", "default": 0 },
+      { "name": "Height", "type": "Integer", "default": 0 },
+      { "name": "BuildQuality", "type": "Numeric", "default": 0 },
+      { "name": "BumperQuality", "type": "Numeric", "default": 0 },
+      { "name": "ElectricalQuality", "type": "Numeric", "default": 0 },
+      { "name": "CanClimb", "type": "Boolean", "default": false },
+      { "name": "CanCrossMoat", "type": "Boolean", "default": false },
+      { "name": "CanFloorIntake", "type": "Boolean", "default": false },
+      { "name": "HasAdvantageKit", "type": "Boolean", "default": false },
+      { "name": "HasAdvantageScope", "type": "Boolean", "default": false },
+      { "name": "HaveAuto", "type": "Boolean", "default": false },
+      { "name": "Comment", "type": "Text", "default": "" }
+    ]
+  }
+}

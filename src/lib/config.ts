@@ -1,11 +1,11 @@
 import { Capacitor } from "@capacitor/core";
-import { getServerAddress } from "./server-address";
+import { settings } from "./settings.svelte";
 
 export function getServerUrl(): string {
   // Used for web/wifi fallback
   const default_server_port = 6328
   if (Capacitor.isNativePlatform()) {
-    const host = getServerAddress() || "localhost";
+    const host = settings.serverAddress || "localhost";
     return `http://${host}:${default_server_port}`;
   }
   const host = window.location.hostname || "localhost";

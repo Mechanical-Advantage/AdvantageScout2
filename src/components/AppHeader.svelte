@@ -3,7 +3,7 @@
   import { push, location } from "svelte-spa-router";
   import { api } from "@lib/api.svelte";
   import { uploadQueue } from "@lib/upload-queue.svelte";
-  import { devTools } from "@lib/dev-tools.svelte";
+  import { settings } from "@lib/settings.svelte";
   import { confirmLeaveScouting } from "@lib/scouting-route";
   import HomeIcon from "./icons/HomeIcon.svelte";
 
@@ -32,12 +32,14 @@
   const label = $derived(isNative ? statusLabel[api.status] : "Web");
 </script>
 
-<header class="mb-0 flex items-center justify-between border-b border-border pb-1">
+<header
+  class="mb-0 flex items-center justify-between border-b border-border pb-2"
+>
   <div class="flex items-center gap-1.5 text-xs text-fg-muted">
     <span class="h-2 w-2 shrink-0 rounded-full {dot}"></span>
     <span class="font-bold text-fg">Stored: {uploadQueue.items.length}</span>
     <span>{label}</span>
-    {#if devTools.showChunkProgress && api.chunkProgress}
+    {#if settings.showChunkProgress && api.chunkProgress}
       <span>Chunk: {api.chunkProgress.current}/{api.chunkProgress.max}</span>
     {/if}
   </div>

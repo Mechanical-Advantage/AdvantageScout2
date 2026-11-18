@@ -16,7 +16,6 @@
   import { flushQueue } from "./lib/upload-queue.svelte";
   import { UPLOAD_CHECK_INTERVAL, BLE_RECONNECT_INTERVAL } from "./lib/config";
   import { api } from "./lib/api.svelte";
-  import { isOnScoutingForm } from "./lib/scouting-route";
 
   const routes = {
     "/": Home,
@@ -52,17 +51,11 @@
         }
       });
     }
-
-    window.addEventListener("beforeunload", (e) => {
-      if (!isOnScoutingForm()) return;
-      e.preventDefault();
-      e.returnValue = "";
-    });
   });
 </script>
 
 <main class="min-h-screen bg-bg text-fg">
-  <div class="px-4 py-1">
+  <div class="px-4 py-2">
     <AppHeader />
     <Router {routes} />
   </div>

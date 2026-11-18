@@ -12,25 +12,9 @@ export const scoutingSession = $state({
   team3: "",
 });
 
-export interface FieldDef {
-  name: string;
-  type: "Integer" | "Numeric" | "Text" | "Boolean" | string;
-  min?: number;
-  max?: number;
-  default?: unknown;
-  displayType?: string;
-  display?: {
-    name?: string;
-    behavior?: string;
-    x?: number;
-    y?: number;
-    size?: [number, number];
-  };
-}
-
 export interface GameFieldsResponse {
   fields: Record<string, unknown>;
-  setup: Record<string, { fields: FieldDef[] }>;
+  setup: Record<string, unknown>;
 }
 
 export const gameFieldsCache = $state<{

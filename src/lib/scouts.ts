@@ -1,3 +1,4 @@
+import { getCachedGameFields, setCachedGameFields } from "./game-fields-cache";
 import { api } from "./api.svelte";
 import type { GameFieldsResponse, ScoutingMode } from "./scouting-store.svelte";
 
@@ -152,7 +153,15 @@ export async function fetchCurrentSuperSchedule(): Promise<SuperScheduleRow> {
 export async function fetchGameFields(
   mode: ScoutingMode,
 ): Promise<GameFieldsResponse> {
-  return fetchJson<GameFieldsResponse>(`/api/game_fields/${mode}`);
+  try {
+    const data = await fetchJson<GameFieldsResponse>(`/api/game_fields/${mode}`);
+    setCachedGameFields(mode, data);
+    return data;
+  } catch (e) {
+    const cached = getCachedGameFields(mode);
+    if (cached) return cached;
+    throw e;
+  }
 }
 
 export async function fetchCurrentMatchScheduleStatus(): Promise<MatchScheduleStatus> {

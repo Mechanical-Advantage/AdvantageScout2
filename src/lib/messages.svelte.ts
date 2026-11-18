@@ -1,3 +1,4 @@
+import { resetSettings } from "./settings.svelte";
 import { push } from "svelte-spa-router";
 import { api } from "./api.svelte";
 import { getDeviceName, hasDeviceName, setDeviceName } from "./device";
@@ -39,6 +40,7 @@ function executeMessage(message: DeviceMessage): void {
     case "clear_storage":
       showToast("Clearing storage...");
       localStorage.clear();
+      resetSettings();
       push("/setupmodal");
       break;
     case "toast":

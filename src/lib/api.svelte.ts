@@ -1,6 +1,6 @@
 import { BleBridge } from "./ble-bridge";
 import { getServerUrl } from "./config";
-import { getPreferWifi } from "./wifi-preference";
+import { settings } from "./settings.svelte";
 
 export type FetchStatus = "disconnected" | "connecting" | "connected" | "error";
 
@@ -85,7 +85,7 @@ class ApiService {
     init?: RequestInit,
     onProgress?: (current: number, max: number) => void,
   ): Promise<Response> {
-    if (getPreferWifi()) {
+    if (settings.preferWifi) {
       try {
         return await fetch(`${getServerUrl()}${path}`, init);
       } catch (e) {

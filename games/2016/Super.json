@@ -1,0 +1,126 @@
+{
+  "super": {
+    "fields": [
+      {
+        "name": "BreachAchieved",
+        "type": "Boolean",
+        "default": false
+      },
+      {
+        "name": "TowerCaptured",
+        "type": "Boolean",
+        "default": false
+      },
+      {
+        "name": "CoordinationRating",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamRating1",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamDriveRating1",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamRobotRating1",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamBotState1",
+        "type": "Integer",
+        "default": 1
+      },
+      {
+        "name": "TeamDNP1",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "TeamWatch1",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "Team1Comment",
+        "type": "Text",
+        "default": ""
+      },
+      {
+        "name": "TeamRating2",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamDriveRating2",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamRobotRating2",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamBotState2",
+        "type": "Integer",
+        "default": 1
+      },
+      {
+        "name": "TeamDNP2",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "TeamWatch2",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "Team2Comment",
+        "type": "Text",
+        "default": ""
+      },
+      {
+        "name": "TeamRating3",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamDriveRating3",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamRobotRating3",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamBotState3",
+        "type": "Integer",
+        "default": 1
+      },
+      {
+        "name": "TeamDNP3",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "TeamWatch3",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "Team3Comment",
+        "type": "Text",
+        "default": ""
+      }
+    ]
+  }
+}

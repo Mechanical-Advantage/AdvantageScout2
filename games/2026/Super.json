@@ -1,117 +1,110 @@
 {
-  "auto": {
+  "super": {
     "fields": [
       {
-        "name": "MyTestValue",
-        "type": "Integer",
-        "min": 0,
-        "max": 10,
-        "default": 0,
-        "displayType": "Button",
-        "display": {
-          "name": "My Test Value",
-          "behavior": "hold",
-          "x": 0,
-          "y": 0,
-          "size": [2, 1]
-        }
+        "name": "TeamRating1",
+        "type": "Numeric",
+        "default": 0
       },
       {
-        "name": "MyTestValue2",
-        "type": "Integer",
-        "displayType": "Button",
-        "display": {
-          "name": "My Test Value 2",
-          "behavior": "hold",
-          "x": 0,
-          "y": 2,
-          "size": [1, 1]
-        }
+        "name": "TeamDriveRating1",
+        "type": "Numeric",
+        "default": 0
       },
       {
-        "name": "MyTestValue3",
-        "type": "Integer",
-        "displayType": "Button",
-        "display": {
-          "name": "My Test Value 2",
-          "behavior": "hold",
-          "x": 10,
-          "y": 0,
-          "size": [1, 1]
-        }
+        "name": "TeamRobotRating1",
+        "type": "Numeric",
+        "default": 0
       },
       {
-        "name": "MyTestValue4",
+        "name": "TeamBotState1",
         "type": "Integer",
-        "min": 0,
-        "max": 10,
-        "displayType": "Button",
-        "display": {
-          "name": "My Test Value 2",
-          "behavior": "hold",
-          "x": 10,
-          "y": 2,
-          "size": [1, 1]
-        }
-      }
-    ]
-  },
-  "tele": {
-    "fields": [
-      {
-        "name": "MyTestValue",
-        "type": "Integer",
-        "min": 0,
-        "max": 10,
-        "default": 0,
-        "displayType": "Button",
-        "display": {
-          "name": "My Test Value Tele",
-          "behavior": "hold",
-          "x": 0,
-          "y": 0,
-          "size": [2, 1]
-        }
+        "default": 1
       },
       {
-        "name": "MyTestValue2",
+        "name": "TeamDNP1",
         "type": "Integer",
-        "displayType": "Button",
-        "display": {
-          "name": "My Test Value 2",
-          "behavior": "hold",
-          "x": 0,
-          "y": 2,
-          "size": [1, 1]
-        }
+        "default": 0
       },
       {
-        "name": "MyTestValue3",
+        "name": "TeamWatch1",
         "type": "Integer",
-        "min": 0,
-        "max": 10,
-        "displayType": "Button",
-        "display": {
-          "name": "My Active Test Value 3",
-          "behavior": "hold",
-          "x": 10,
-          "y": 0,
-          "size": [1, 1]
-        }
+        "default": 0
       },
       {
-        "name": "MyTestValue4",
+        "name": "Team1Comment",
+        "type": "Text",
+        "default": ""
+      },
+      {
+        "name": "TeamRating2",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamDriveRating2",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamRobotRating2",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamBotState2",
         "type": "Integer",
-        "min": 0,
-        "max": 10,
-        "displayType": "Button",
-        "display": {
-          "name": "My Test Value 2",
-          "behavior": "hold",
-          "x": 10,
-          "y": 2,
-          "size": [1, 1]
-        }
+        "default": 1
+      },
+      {
+        "name": "TeamDNP2",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "TeamWatch2",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "Team2Comment",
+        "type": "Text",
+        "default": ""
+      },
+      {
+        "name": "TeamRating3",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamDriveRating3",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamRobotRating3",
+        "type": "Numeric",
+        "default": 0
+      },
+      {
+        "name": "TeamBotState3",
+        "type": "Integer",
+        "default": 1
+      },
+      {
+        "name": "TeamDNP3",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "TeamWatch3",
+        "type": "Integer",
+        "default": 0
+      },
+      {
+        "name": "Team3Comment",
+        "type": "Text",
+        "default": ""
       }
     ]
   }
