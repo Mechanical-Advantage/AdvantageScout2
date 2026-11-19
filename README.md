@@ -1,6 +1,6 @@
 # Advantage Scout 2
 
-Advantage Scout 2 is the new major version of our electronic scouting system [Advantage Scout](https://github.com/Mechanical-Advantage/AdvantageScout). The app consists of a Svelte5 frontend with a python FastAPI server. Bluetooth Low-Energy is used to communicate with the Android tablets. In this version, the scouting laptop acts as the peripheral that the tablets (clients) connect to.
+Advantage Scout 2 is the new major version of our electronic scouting system [Advantage Scout](https://github.com/Mechanical-Advantage/AdvantageScout). The app consists of a Svelte5 frontend with a Python FastAPI server. Bluetooth Low-Energy is used to communicate with the Android tablets. In this version, the scouting laptop acts as the peripheral that the tablets (clients) connect to.
 
 ![Banner](/banner.jpg)
 
@@ -14,58 +14,53 @@ Advantage Scout 2 is the new major version of our electronic scouting system [Ad
 
 After cloning this repository, run the setup script under `scripts/`. Use the setup `.sh` for macOS/Linux, or the `.bat` file for Windows. Alternatively, complete the following steps to have a working environment for the app.
 
-After seting up the project, obtain the `.env` for the necessary keys to run the full app.
+After setting up the project, obtain the `.env` for the necessary keys to run the full app.
 
-### Linux/macOS Setup
+### Setup
 
-```bash
-# Install JS dependencies
-npm install
-
-# Create a python virtual environment
-# Use python3 if on macOS
-python -m venv .venv
-
-# Activate the environment
-source .venv/bin/activate
-
-# Install Python requirements
-pip install -r requirements/requirements-[your-os].txt
-
-# Create the database directory
-mkdir data
-
-# Initialize the global database
-python server/global_init.py
-
-# Generate the Match and other databases by starting up the server
-python server/http_server.py --regen-db
-```
-
-### Windows Setup
-
-```powershell
-# Install JS dependencies
-npm install
-
-# Create a Python virtual environment
-python -m venv .venv
-
-# Activate the environment (PowerShell)
-.\.venv\Scripts\Activate.ps1
-
-# Install Python requirements
-pip install -r requirements/requirements-windows.txt
-
-# Create the database directory
-mkdir data
-
-# Initialize the global database
-python server/global_init.py
-
-# Generate the Match and other databases by starting up the server
-python server/http_server.py --regen-db
-```
+1. Install JS dependencies
+   ```bash
+   npm install
+   ```
+2. Create a python virtual environment (use python3 if on macOS)
+   ```bash
+   python -m venv .venv
+   ```
+3. Activate the environment
+   - Linux/macOS
+   ```bash
+   source .venv/bin/activate
+   ```
+   - Windows
+   ```powershell
+   .\.venv\Scripts\Activate.ps1
+   ```
+4. Install Python requirements
+   - Linux
+   ```bash
+   pip install -r requirements/requirements-linux.txt
+   ```
+   - macOS
+   ```bash
+   pip install -r requirements/requirements-mac.txt
+   ```
+   - Windows
+   ```powershell
+   pip install -r requirements/requirements-windows.txt
+   ```
+5. Initialize server
+   - Create the database directory
+   ```bash
+   mkdir data
+   ```
+   - Initialize the global database
+   ```bash
+   python server/global_init.py
+   ```
+   - Generate the Match and other databases by starting up the server
+   ```bash
+   python server/http_server.py --regen-db
+   ```
 
 ## Running the Server
 
